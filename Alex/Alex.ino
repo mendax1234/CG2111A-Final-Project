@@ -5,7 +5,7 @@
 #include "packet.h"
 #include "constants.h"
 
-bool MANUAL_MODE = false;
+bool MANUAL = false;
 volatile TDirection dir = STOP;
 
 volatile float distance = DIST_MID;
@@ -105,7 +105,7 @@ void handleCommand(TPacket *command)
   {
     // For movement commands, param[0] = distance, param[1] = speed.
     case COMMAND_FORWARD:
-        if (MANUAL_MODE) {
+        if (MANUAL) {
           distance = (double) command->params[0];
         }
         forward();
@@ -113,21 +113,21 @@ void handleCommand(TPacket *command)
 
     // Reverse movement
     case COMMAND_REVERSE:
-        if (MANUAL_MODE) {
+        if (MANUAL) {
           distance = (double) command->params[0];
         }
         backward();
       break;
 
     case COMMAND_TURN_LEFT:
-        if (MANUAL_MODE) {
+        if (MANUAL) {
           angleDur = (double) command->params[0];
         }
         left();
       break;
 
     case COMMAND_TURN_RIGHT:
-        if (MANUAL_MODE) {
+        if (MANUAL) {
           angleDur = (double) command->params[0];
         }
         right();
@@ -169,8 +169,8 @@ void handleCommand(TPacket *command)
       break;
 
     case COMMAND_MANUAL:
-        MANUAL_MODE = !MANUAL_MODE; // Toggle manual mode
-        if (!MANUAL_MODE) { // Reset distance and angle when toggle back to auto mode
+        MANUAL = !MANUAL; // Toggle manual mode
+        if (!MANUAL) { // Reset distance and angle when toggle back to auto mode
           distance = DIST_MID;
           angleDur = ANG_MID;
         }
@@ -204,7 +204,7 @@ void handlePacket(TPacket *packet)
   }
 }
 
-#define STOP_DELAY 20000 // Milliseconds
+#define STOP_DELAY 200 // Milliseconds
 void loop() {
   if (dir == FORWARD) {
     if (forwardDist >= targetDist) {
