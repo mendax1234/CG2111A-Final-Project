@@ -1,8 +1,8 @@
 /*
-   Setup and start codes for external interrupts and
-   pullup resistors.
-*/
-
+ * Setup and start codes for external interrupts and 
+ * pullup resistors.
+ * 
+ */
 // Enable pull up resistors on pins 18 and 19
 void enablePullups()
 {
@@ -75,3 +75,5 @@ ISR(INT3_vect)
 {
   leftISR();  // Call the leftISR function
 }
+
+// Implement INT2 and INT3 ISRs above.

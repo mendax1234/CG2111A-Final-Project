@@ -5,15 +5,6 @@
 #include "packet.h"
 #include "constants.h"
 
-bool MANUAL = false;
-volatile TDirection dir = STOP;
-
-volatile float distance = DIST_MID;
-unsigned long targetDist;
-
-volatile float angleDur = ANG_MID;
-unsigned long lastTurnTime;
-
 /*
  * Alex's configuration constants
  */
@@ -30,20 +21,31 @@ unsigned long lastTurnTime;
 #define WHEEL_CIRC          22
 
 // PI, for calculating circumference
-#define PI                  3.141592654
+// #define PI                  3.141592654
 
 // Alex's length and breadth in cm. You must measure
 // and substitute with the correct values.
-#define ALEX_LENGTH         16
-#define ALEX_BREADTH        6
+#define ALEX_LENGTH         27.9
+#define ALEX_BREADTH        16.4
+
+// Alex's Control Mode
+bool MANUAL = false;
+
+// Alex's Direction enum state variable
+volatile TDirection dir;
+
+// Constant under Auto Mode
+volatile float distance = DIST_MID;
+volatile float angleDeg = ANG_MID;
+volatile float speed = SPEED_FAST;
 
 // Alex's Diagonal. We compute and store this once since
 // it is expensive to compute and never chanegs.
-float ALEX_DIAGONAL = 0.0;
+float alexDiagonal = 0.0;
 
 // Alex's turning circumference, calculated once. We
 // assume that Alex "turns on a dime"
-float ALEX_CIRC = 0.0;
+float alexCirc = 0.0;
 
 /*
  *    Alex's State Variables
@@ -73,26 +75,23 @@ volatile unsigned long reverseDist;
 
 // Variables to keep track of whether we've moved
 // a command distance
-// unsigned long deltaDist; // The distance the robot should move.
-// unsigned long newDist; // The target distance the robot should reach before stopping
+unsigned long deltaDist; // The distance the robot should move.
+unsigned long newDist; // The target distance the robot should reach before stopping
 
 // Variables to keep track of our turning angle
-// unsigned long deltaTicks;
-// unsigned long targetTicks;
+unsigned long deltaTicks;
+unsigned long targetTicks;
 
 void setup() {
-  // put your setup code here, to run once:
-  // Calculate the constants for turning angles
-  ALEX_DIAGONAL = sqrt((ALEX_LENGTH * ALEX_LENGTH) + (ALEX_BREADTH * ALEX_BREADTH));
-  ALEX_CIRC = PI * ALEX_DIAGONAL;
-
+  alexDiagonal = sqrt((ALEX_LENGTH * ALEX_LENGTH) + (ALEX_BREADTH * ALEX_BREADTH));
+  alexCirc = PI * alexDiagonal;
   cli();
   setupEINT();
   setupSerial();
   startSerial();
 
-  setupMotors();
-  startMotors();
+  // setupMotors();
+  // startMotors();
 
   enablePullups();
   initializeState();
@@ -105,32 +104,42 @@ void handleCommand(TPacket *command)
   {
     // For movement commands, param[0] = distance, param[1] = speed.
     case COMMAND_FORWARD:
+        sendOK();
         if (MANUAL) {
-          distance = (double) command->params[0];
+          forward((double) command->params[0], (float) command->params[1]);
+        } else {
+          forward(distance, speed);
         }
-        forward();
       break;
 
     // Reverse movement
     case COMMAND_REVERSE:
+        sendOK();
         if (MANUAL) {
-          distance = (double) command->params[0];
+          backward((double) command->params[0], (float) command->params[1]);
+        } else {
+          backward(distance, speed);
         }
-        backward();
       break;
 
+    // Turn left
     case COMMAND_TURN_LEFT:
+        sendOK();
         if (MANUAL) {
-          angleDur = (double) command->params[0];
+          left((double) command->params[0], (float) command->params[1]);
+        } else {
+          left(angleDeg, speed);
         }
-        left();
       break;
 
+    // Turn right
     case COMMAND_TURN_RIGHT:
+        sendOK();
         if (MANUAL) {
-          angleDur = (double) command->params[0];
+          right((double) command->params[0], (float) command->params[1]);
+        } else {
+          right(angleDeg, speed);
         }
-        right();
       break;
 
     // Stop movement
@@ -139,22 +148,22 @@ void handleCommand(TPacket *command)
         stop();
       break;
 
-    case COMMAND_SPEED_SLOW:
-        distance = DIST_SHORT;
-        angleDur = ANG_SHORT;
-        sendOK();
+    case COMMAND_SLOW_MODE:
+      distance = DIST_SHORT;
+      angleDeg = ANG_SHORT;
+      sendOK();
+      break;
+    
+    case COMMAND_NORMAL_MODE:
+      distance = DIST_MID;
+      angleDeg = ANG_MID;
+      sendOK();
       break;
 
-    case COMMAND_SPEED_MID:
-        distance = DIST_MID;
-        angleDur = ANG_MID;
-        sendOK();
-      break;
-
-    case COMMAND_SPEED_FAST:
-        distance = DIST_FAR;
-        angleDur = ANG_FAR;
-        sendOK();
+    case COMMAND_FAST_MODE:
+      distance = DIST_FAR;
+      angleDeg = ANG_FAR;
+      sendOK();
       break;
 
     // Get stats (send back status)
@@ -169,12 +178,12 @@ void handleCommand(TPacket *command)
       break;
 
     case COMMAND_MANUAL:
-        MANUAL = !MANUAL; // Toggle manual mode
-        if (!MANUAL) { // Reset distance and angle when toggle back to auto mode
-          distance = DIST_MID;
-          angleDur = ANG_MID;
-        }
-        sendOK();
+      MANUAL = !MANUAL; // Toggle manual mode
+      if (!MANUAL) { // Reset distance and angle when toggle back to auto mode
+        distance = DIST_MID;
+        angleDeg = ANG_MID;
+      }
+      sendOK();
       break;
         
     default:
@@ -204,36 +213,48 @@ void handlePacket(TPacket *packet)
   }
 }
 
-#define STOP_DELAY 200 // Milliseconds
 void loop() {
-  if (dir == FORWARD) {
-    if (forwardDist >= targetDist) {
-      targetDist = 0;
-      stop();
-      delay(STOP_DELAY);
-    }
-  } else if (dir == BACKWARD) {
-    if (reverseDist >= targetDist) {
-      targetDist = 0;
-      stop();
-      delay(STOP_DELAY);
-    }
-  } else if (dir == RIGHT or dir == LEFT) {
-    if (millis() - lastTurnTime >= angleDur) {
-      stop();
-      delay(STOP_DELAY);
-    }
-  }
-  
-  // Handle packet
+// Uncomment the code below for Step 2 of Activity 3 in Week 8 Studio 2
+  // backward(0, 100);
+
+// Uncomment the code below for Week 9 Studio 2
+
+ // put your main code here, to run repeatedly:
   TPacket recvPacket; // This holds commands from the Pi
+
   TResult result = readPacket(&recvPacket);
   
   if(result == PACKET_OK) {
     handlePacket(&recvPacket);
-  } else if (result == PACKET_BAD) {
-    sendBadPacket();
-  } else if (result == PACKET_CHECKSUM_BAD) {
-    sendBadChecksum();
+  }
+  else {
+    if(result == PACKET_BAD) {
+      sendBadPacket();
+    } else {
+      if(result == PACKET_CHECKSUM_BAD) {
+        sendBadChecksum();
+      }
+    }
+  }
+
+  // Optimized version of the above
+  if (deltaDist > 0) {
+    if ((dir == FORWARD && forwardDist > newDist) ||
+        (dir == BACKWARD && reverseDist > newDist) ||
+        (dir == (TDirection) STOP)) {
+      deltaDist = 0;
+      newDist = 0;
+      stop();
+    }
+  }
+
+  if (deltaTicks > 0) {
+    if ((dir == LEFT && leftReverseTicksTurns >= targetTicks) ||
+        (dir == RIGHT && rightReverseTicksTurns >= targetTicks) ||
+        (dir == (TDirection) STOP)) {
+      deltaTicks = 0;
+      targetTicks = 0;
+      stop();
+    }
   }
 }

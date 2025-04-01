@@ -1,8 +1,8 @@
 /*
-   Setup and start codes for serial communications
-*/
-
-// For now we are using 
+ * Setup and start codes for serial communications
+ * 
+ */
+// Set up the serial connection. For now we are using 
 // Arduino Wiring, you will replace this later
 // with bare-metal code.
 void setupSerial()
@@ -49,23 +49,29 @@ void writeSerial(const char *buffer, int len)
   // Change Serial to Serial2/Serial3/Serial4 in later labs when using other UARTs
 }
 
-TResult readPacket(TPacket *packet)
-{
-    // Reads in data from the serial port and
-    // deserializes it.Returns deserialized
-    // data in "packet".
-    
-    char buffer[PACKET_SIZE];
-    int len;
-
-    len = readSerial(buffer);
-
-    if(len == 0)
-      return PACKET_INCOMPLETE;
-    else
-      return deserialize(buffer, len, packet);
-    
-}
+/*
+ * 
+ * Alex Communication Routines.
+ * 
+ */
+ 
+ TResult readPacket(TPacket *packet)
+ {
+     // Reads in data from the serial port and
+     // deserializes it.Returns deserialized
+     // data in "packet".
+     
+     char buffer[PACKET_SIZE];
+     int len;
+ 
+     len = readSerial(buffer);
+ 
+     if(len == 0)
+       return PACKET_INCOMPLETE;
+     else
+       return deserialize(buffer, len, packet);
+     
+ }
 
 void sendResponse(TPacket *packet)
 {

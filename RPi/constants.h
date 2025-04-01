@@ -16,12 +16,11 @@ const char STATS = 'e';
 const char CLEAR = 'r';
 const char QUIT = 'q';
 const char MANUAL = 'm';
-// const char COLOR = 'c';
-// const char DISTANCE = 'v';
+const char COLOR = 'c';
+const char DISTANCE = 'v';
 const char SLOW_MODE = '1';
 const char NORMAL_MODE = '2';
 const char FAST_MODE = '3';
-
 
 // Packet types
 typedef enum
@@ -60,7 +59,7 @@ typedef enum
   COMMAND_SLOW_MODE = 7,
   COMMAND_NORMAL_MODE = 8,
   COMMAND_FAST_MODE = 9,
-  COMMAND_MANUAL = 10
+  COMMAND_MANUAL = 10,
 } TCommandType;
 #endif
 

@@ -1,70 +1,18 @@
 #include <AFMotor.h>
 
-// Motor control
-#define FRONT_LEFT   1 // M3 on the driver shield
-#define FRONT_RIGHT  4 // M2 on the driver shield
-#define BACK_LEFT    2 // M4 on the driver shield
-#define BACK_RIGHT   3 // M1 on the driver shield
+// Motor pin definitions
+#define FRONT_LEFT   4 // M4 on the driver shield
+#define FRONT_RIGHT  1 // M1 on the driver shield
+#define BACK_LEFT    3 // M3 on the driver shield
+#define BACK_RIGHT   2 // M2 on the driver shield
 
+// Motor objects
 AF_DCMotor motorFL(FRONT_LEFT);
 AF_DCMotor motorFR(FRONT_RIGHT);
 AF_DCMotor motorBL(BACK_LEFT);
 AF_DCMotor motorBR(BACK_RIGHT);
 
-// void move(float speed, int direction)
-// {
-//   setMotorSpeed(speed);
-
-//   switch(direction)
-//     {
-//       case BACKWARD:
-//         motorFL.run(BACKWARD);
-//         motorFR.run(BACKWARD);
-//         motorBL.run(FORWARD);
-//         motorBR.run(FORWARD);
-//       break;
-//       case FORWARD:
-//         motorFL.run(FORWARD);
-//         motorFR.run(FORWARD);
-//         motorBL.run(BACKWARD);
-//         motorBR.run(BACKWARD);
-//       break;
-//       case LEFT:
-//         motorFL.run(BACKWARD);
-//         motorFR.run(FORWARD);
-//         motorBL.run(FORWARD);
-//         motorBR.run(BACKWARD);
-//       break;
-//       case RIGHT:
-//         motorFL.run(FORWARD);
-//         motorFR.run(BACKWARD);
-//         motorBL.run(BACKWARD);
-//         motorBR.run(FORWARD); 
-//       break;
-//       case STOP:
-//       default:
-//         motorFL.run(STOP);
-//         motorFR.run(STOP);
-//         motorBL.run(STOP);
-//         motorBR.run(STOP); 
-//     }
-// }
-
-void setupMotors() {
-  // Prepare for bare-metal usage
-}
-
-void startMotors() {
-  // Prepare for bare-metal usage
-}
-
-void stopMotors() {
-  motorFL.run(STOP);
-  motorFR.run(STOP);
-  motorBL.run(STOP);
-  motorBR.run(STOP); 
-}
-
+// Direction control functions for left motors
 void leftMotorsForward() {
   motorFL.run(FORWARD);
   motorBL.run(BACKWARD);
@@ -75,6 +23,7 @@ void leftMotorsReverse() {
   motorBL.run(FORWARD);
 }
 
+// Direction control functions for right motors
 void rightMotorsForward() {
   motorFR.run(FORWARD);
   motorBR.run(BACKWARD);
@@ -85,73 +34,113 @@ void rightMotorsReverse() {
   motorBR.run(FORWARD);
 }
 
+// Set speed for all motors (speed in percentage, 0-100)
 void setMotorSpeed(float speed) {
-  // Map into reasonable range
-  if (speed < 0) {
-    speed = 0;
-  } else if (speed > 100.0) {
-    speed = 100.0;
-  }
-
-  int speed_scaled = (int) ((speed / 100.0) * 255.0);
-
+  int speed_scaled = (speed / 100.0) * 255; // Scale to 0-255
+  if (speed_scaled < 0) speed_scaled = 0;
+  if (speed_scaled > 255) speed_scaled = 255;
   motorFL.setSpeed(speed_scaled);
   motorFR.setSpeed(speed_scaled);
   motorBL.setSpeed(speed_scaled);
   motorBR.setSpeed(speed_scaled);
 }
 
-void forward()
-{
+// Distance-based
+// Movement functions
+void forward(float dist, float speed) {
+  if (dist > 0) {
+    deltaDist = dist;
+  } else {
+    deltaDist = 9999999; // Move indefinitely
+  }
+  newDist = forwardDist + deltaDist;
   dir = FORWARD;
-  setMotorSpeed(SPEED_FAST);
-
-  targetDist = forwardDist + distance;
-
+  setMotorSpeed(speed);
   leftMotorsForward();
   rightMotorsForward();
 }
 
-void backward() {
-  dir = BACKWARD;
-  setMotorSpeed(SPEED_FAST);
-
-  targetDist = reverseDist + distance;
-
+void backward(float dist, float speed) {
+  if (dist > 0) {
+    deltaDist = dist;
+  } else {
+    deltaDist = 9999999; // Move indefinitely
+  }
+  newDist = reverseDist + deltaDist;
+  dir = (TDirection) BACKWARD;
+  setMotorSpeed(speed);
   leftMotorsReverse();
   rightMotorsReverse();
 }
 
-void left() {
-  dir = LEFT;
-  setMotorSpeed(SPEED_FAST);
-
-  // Angle-control mode
-  //  unsigned long deltaTicks = (angle / 360.0) * (ALEX_CIRC / WHEEL_CIRC) * COUNTS_PER_REV;
-  //  targetTurnTicks = leftReverseTicks + deltaTicks;
-  //  dbprintf("Left ticks: %d\n", deltaTicks);
-  lastTurnTime = millis();
-
-  leftMotorsReverse();
+// Time-based
+void forwardTime(float time, float speed) {
+  dir = FORWARD;
+  setMotorSpeed(speed);
+  leftMotorsForward();
   rightMotorsForward();
+  delay(time*10); // Run for the specified time in milliseconds
+  stop();
 }
 
-void right() {
-  dir = RIGHT;
-  setMotorSpeed(SPEED_FAST);
+void backwardTime(float time, float speed) {
+  dir = (TDirection) BACKWARD;
+  setMotorSpeed(speed);
+  leftMotorsReverse();
+  rightMotorsReverse();
+  delay(time*10); // Run for the specified time in milliseconds
+  stop();
+}
 
-  // Angle-control mode
-  //  unsigned long deltaTicks = (angle / 360.0) * (ALEX_CIRC / WHEEL_CIRC) * COUNTS_PER_REV;
-  //  targetTurnTicks = rightReverseTicks + deltaTicks;
-  //  dbprintf("Right ticks: %d\n", deltaTicks);
-  lastTurnTime = millis();
+void leftTime(float time, float speed) {
+  dir = (TDirection) LEFT;
+  setMotorSpeed(speed);
+  leftMotorsForward();
+  rightMotorsReverse();
+  delay(time*10); // Run for the specified time in milliseconds
+  stop();
+}
 
+void rightTime(float time, float speed) {
+  dir = (TDirection) RIGHT;
+  setMotorSpeed(speed);
+  leftMotorsReverse();
+  rightMotorsForward();
+  delay(time*10); // Run for the specified time in milliseconds
+  stop();
+}
+
+
+void left(float ang, float speed) {
+  if (ang == 0) {
+    deltaTicks = 99999999; // Turn indefinitely
+  } else {
+    deltaTicks = computeDeltaTicks(ang); // Assumes this function exists elsewhere
+  }
+  targetTicks = leftReverseTicksTurns + deltaTicks;
+  dir = (TDirection) LEFT;
+  setMotorSpeed(speed);
   leftMotorsForward();
   rightMotorsReverse();
 }
 
-void stop()
-{
-  dir = STOP;
-  stopMotors();
+void right(float ang, float speed) {
+  if (ang == 0) {
+    deltaTicks = 99999999; // Turn indefinitely
+  } else {
+    deltaTicks = computeDeltaTicks(ang); // Assumes this function exists elsewhere
+  }
+  targetTicks = rightReverseTicksTurns + deltaTicks;
+  dir = (TDirection) RIGHT;
+  setMotorSpeed(speed);
+  leftMotorsReverse();
+  rightMotorsForward();
+}
+
+void stop() {
+  dir = (TDirection) STOP;
+  motorFL.run(RELEASE);
+  motorFR.run(RELEASE);
+  motorBL.run(RELEASE);
+  motorBR.run(RELEASE);
 }

@@ -7,7 +7,7 @@
  *  
  */
 
-// Motor speed constants
+ // Motor speed constants
 const float SPEED_SLOW = 60.0;
 const float SPEED_MID = 80.0;
 const float SPEED_FAST = 100.0;
@@ -18,19 +18,9 @@ const float DIST_MID = 5.0;
 const float DIST_FAR = 25.0;
 
 // Angle constants
-const float ANG_SHORT = 50.0;
-const float ANG_MID = 100.0;
-const float ANG_FAR = 250.0;
-
-// Alex directions
-typedef enum
-{
-  STOP=0,
-  FORWARD=1,
-  BACKWARD=2,
-  LEFT=3,
-  RIGHT=4
-} TDirection;
+const float ANG_SHORT = 10.0;
+const float ANG_MID = 30.0;
+const float ANG_FAR = 60.0;
 
 // Packet types
 typedef enum
@@ -66,9 +56,19 @@ typedef enum
   COMMAND_STOP = 4,
   COMMAND_GET_STATS = 5,
   COMMAND_CLEAR_STATS = 6,
-  COMMAND_SPEED_SLOW = 7,
-  COMMAND_SPEED_MID = 8,
-  COMMAND_SPEED_FAST = 9,
-  COMMAND_MANUAL = 10
+  COMMAND_SLOW_MODE = 7,
+  COMMAND_NORMAL_MODE = 8,
+  COMMAND_FAST_MODE = 9,
+  COMMAND_MANUAL = 10,
 } TCommandType;
+
+typedef enum
+{
+  STOP=0,
+  FORWARD=1,
+  BACKWARD=2,
+  LEFT=3,
+  RIGHT=4
+} TDirection;
+
 #endif

@@ -4,15 +4,13 @@
 #include <semaphore.h>
 #include <unistd.h>
 #include <stdint.h>
+#include <cctype>
 #include "packet.h"
 #include "serial.h"
 #include "serialize.h"
 #include "constants.h"
 
-#include <cctype>
-#include <termios.h>
-
-#define PORT_NAME			"/dev/ttyACM0"
+#define PORT_NAME			"/dev/ttyACM1"
 #define BAUD_RATE			B9600
 
 int exitFlag=0;
@@ -23,24 +21,20 @@ static bool send_status = false;
 char getch() {
 	char buf = 0;
 	struct termios old = {0};
-	if (tcgetattr(0, &old) < 0) {
-		perror("tcsetattr()");
-	}
+	if (tcgetattr(0, &old) < 0)
+			perror("tcsetattr()");
 	old.c_lflag &= ~ICANON;
 	old.c_lflag &= ~ECHO;
 	old.c_cc[VMIN] = 1;
 	old.c_cc[VTIME] = 0;
-	if (tcsetattr(0, TCSANOW, &old) < 0) {
-		perror("tcsetattr ICANON");
-	}
-	if (read(0, &buf, 1) < 0) {
-		perror ("read()");
-	}
+	if (tcsetattr(0, TCSANOW, &old) < 0)
+			perror("tcsetattr ICANON");
+	if (read(0, &buf, 1) < 0)
+			perror ("read()");
 	old.c_lflag |= ICANON;
 	old.c_lflag |= ECHO;
-	if (tcsetattr(0, TCSADRAIN, &old) < 0) {
-		perror ("tcsetattr ~ICANON");
-	}
+	if (tcsetattr(0, TCSADRAIN, &old) < 0)
+			perror ("tcsetattr ~ICANON");
 	return (buf);
 }
 
@@ -84,6 +78,7 @@ void handleResponse(TPacket *packet)
 	{
 		case RESP_OK:
 			printf("Command OK\n");
+			send_status = false;
 		break;
 
 		case RESP_STATUS:
@@ -216,14 +211,16 @@ void printCurrentMode(int mode) {
 	}
 }
 
-void sendCommand(char command, bool manual, int* mode) {
+void sendCommand(char command, bool manual, int* mode)
+{
 	TPacket commandPacket;
 
 	commandPacket.packetType = PACKET_TYPE_COMMAND;
 	command = tolower(command);
-	
+
 	printf("\n");
-	switch(command) {
+	switch(command)
+	{
 		case FORWARD:
 			printf("FORWARD\n");
 			printCurrentMode(*mode);
@@ -233,7 +230,7 @@ void sendCommand(char command, bool manual, int* mode) {
 			break;
 
 		case REVERSE:
-			printf("REVERSE\n");
+		printf("REVERSE\n");
 			printCurrentMode(*mode);
 			if (manual) getParams(&commandPacket);
 			commandPacket.command = COMMAND_REVERSE;
@@ -243,7 +240,7 @@ void sendCommand(char command, bool manual, int* mode) {
 		case LEFT:
 			printf("LEFT\n");
 			printCurrentMode(*mode);
-			if (manual) getParams(&commandPacket);
+			if (manual)getParams(&commandPacket);
 			commandPacket.command = COMMAND_TURN_LEFT;
 			sendPacket(&commandPacket);
 			break;
@@ -251,7 +248,7 @@ void sendCommand(char command, bool manual, int* mode) {
 		case RIGHT:
 			printf("RIGHT\n");
 			printCurrentMode(*mode);
-			if (manual) getParams(&commandPacket);
+			if (manual)getParams(&commandPacket);
 			commandPacket.command = COMMAND_TURN_RIGHT;
 			sendPacket(&commandPacket);
 			break;
@@ -266,7 +263,7 @@ void sendCommand(char command, bool manual, int* mode) {
 		case CLEAR:
 			printf("CLEAR\n");
 			commandPacket.command = COMMAND_CLEAR_STATS;
-			// commandPacket.params[0] = 0;
+			commandPacket.params[0] = 0;
 			sendPacket(&commandPacket);
 			break;
 
@@ -276,7 +273,7 @@ void sendCommand(char command, bool manual, int* mode) {
 			commandPacket.command = COMMAND_GET_STATS;
 			sendPacket(&commandPacket);
 			break;
-			
+
 		case SLOW_MODE:
 			printf("Set SLOW MODE\n");
 			*mode = COMMAND_SLOW_MODE;
@@ -302,7 +299,7 @@ void sendCommand(char command, bool manual, int* mode) {
 			printf("QUIT\n");
 			exitFlag=1;
 			break;
-			
+		
 		case MANUAL:
 			if (manual) printf("SET TO MANUAL MODE\n");
 			else printf("SET TO AUTO MODE\n");
@@ -310,10 +307,11 @@ void sendCommand(char command, bool manual, int* mode) {
 			commandPacket.command = COMMAND_MANUAL;
 			sendPacket(&commandPacket);
 			break;
-			
+
 		default:
 			send_status = false; // Set status back to idle
 			printf("Bad command\n");
+
 	}
 }
 
@@ -340,18 +338,19 @@ int main()
 
 	int manual = false;
 	int currentMode = COMMAND_NORMAL_MODE;
-	
+
 	printf("\nWASD for movement, f=stop, e=get stats, r=clear stats, q=exit\n");
-	while(!exitFlag) {
+	while(!exitFlag)
+	{
 		char ch;
-		
 		if (manual) {
 			printf("\nWASD for movement, f=stop, e=get stats, r=clear stats, q=exit\n");
 			scanf("%c", &ch);
 			flushInput(); // Purge extraneous characters from input stream
 		} else ch = getch(); // Auto mode
-		
+
 		manual = ch == MANUAL ? !manual : manual; // Only toggle when 'm' clicked
+
 		if (!send_status) {
 			send_status = true;
 			sendCommand(ch, manual, &currentMode);
