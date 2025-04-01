@@ -427,7 +427,7 @@ int main()
         printf("                                \033[1;34mTHE ROBONAUTS CONTROL PANEL\033[0m                                 \n");
         printf("======================================================================================================\n");
         printf("  \033[1;33mWASD\033[0m - Move    \033[1;33mf\033[0m - Stop    \033[1;33me\033[0m - Get Stats    \033[1;33mr\033[0m - Clear Stats    \033[1;33mq\033[0m - Exit  \n");
-        printf("  \033[1;33mm\033[0m - Toggle Manual Mode    \033[1;33mc\033[0m - Change LED Color    \033[1;33m1\033[0m - Slow Mode    \033[1;33m2\033[0m - Normal Mode    \033[1;33m3\033[0m - Fast Mode  \n");
+        printf("  \033[1;33mm\033[0m - Toggle Manual Mode    \033[1;33mc\033[0m - Get Color    \033[1;33m1\033[0m - Slow Mode    \033[1;33m2\033[0m - Normal Mode    \033[1;33m3\033[0m - Fast Mode  \n");
         printf("======================================================================================================\n");
 
         if (manual) {
