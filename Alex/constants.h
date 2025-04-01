@@ -40,7 +40,8 @@ typedef enum
   RESP_BAD_PACKET = 2,
   RESP_BAD_CHECKSUM = 3,
   RESP_BAD_COMMAND = 4,
-  RESP_BAD_RESPONSE = 5 
+  RESP_BAD_RESPONSE = 5,
+  RESP_COLOR = 6,
 } TResponseType;
 
 
@@ -60,6 +61,7 @@ typedef enum
   COMMAND_NORMAL_MODE = 8,
   COMMAND_FAST_MODE = 9,
   COMMAND_MANUAL = 10,
+  COMMAND_COLOR = 11,
 } TCommandType;
 
 typedef enum
@@ -70,5 +72,13 @@ typedef enum
   LEFT=3,
   RIGHT=4
 } TDirection;
+
+typedef enum  {
+  WHITE = 0,
+  RED = 1,
+  BLUE = 2,
+  GREEN = 3,
+  UNKNOWN = 4
+} TColorType;
 
 #endif

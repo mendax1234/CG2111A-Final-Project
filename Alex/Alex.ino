@@ -28,6 +28,21 @@
 #define ALEX_LENGTH         27.9
 #define ALEX_BREADTH        16.4
 
+/*
+      Alex's Colour Sensor variables
+*/
+#define S0 25        //Module pins  wiring
+#define S1 27
+#define S2 29
+#define S3 31
+#define sensorOut 33
+
+int redFreq = 0, greenFreq = 0, blueFreq = 0;  // RGB frequency values
+int colorSensorDelay = 20;  // Delay between readings
+int colorAverageDelay = 5;  // Delay between averaging samples
+
+volatile TColorType detectedColor = UNKNOWN;
+
 // Alex's Control Mode
 bool MANUAL = false;
 
@@ -92,6 +107,9 @@ void setup() {
 
   // setupMotors();
   // startMotors();
+
+  setupColor();
+  setupArm();
 
   enablePullups();
   initializeState();
@@ -169,6 +187,7 @@ void handleCommand(TPacket *command)
     // Get stats (send back status)
     case COMMAND_GET_STATS:
         sendStatus();
+        sendOK();
       break;
 
     // Clear stats (clear counters based on the parameter)
@@ -183,6 +202,13 @@ void handleCommand(TPacket *command)
         distance = DIST_MID;
         angleDeg = ANG_MID;
       }
+      sendOK();
+      break;
+
+    case COMMAND_COLOR:
+      findColor();
+      getColor();
+      sendColor(detectedColor);
       sendOK();
       break;
         

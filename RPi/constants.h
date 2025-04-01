@@ -17,7 +17,6 @@ const char CLEAR = 'r';
 const char QUIT = 'q';
 const char MANUAL = 'm';
 const char COLOR = 'c';
-const char DISTANCE = 'v';
 const char SLOW_MODE = '1';
 const char NORMAL_MODE = '2';
 const char FAST_MODE = '3';
@@ -40,7 +39,8 @@ typedef enum
   RESP_BAD_PACKET = 2,
   RESP_BAD_CHECKSUM = 3,
   RESP_BAD_COMMAND = 4,
-  RESP_BAD_RESPONSE = 5 
+  RESP_BAD_RESPONSE = 5,
+  RESP_COLOR = 6,
 } TResponseType;
 
 
@@ -60,6 +60,7 @@ typedef enum
   COMMAND_NORMAL_MODE = 8,
   COMMAND_FAST_MODE = 9,
   COMMAND_MANUAL = 10,
+  COMMAND_COLOR = 11,
 } TCommandType;
 #endif
 
