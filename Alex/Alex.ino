@@ -211,6 +211,16 @@ void handleCommand(TPacket *command)
       sendColor(detectedColor);
       sendOK();
       break;
+
+    case COMMAND_OPEN_ARM:
+      openArm();
+      sendOK();
+      break;
+
+    case COMMAND_CLOSE_ARM:
+      closeArm();
+      sendOK();
+      break;
         
     default:
       sendBadCommand();

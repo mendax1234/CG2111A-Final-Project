@@ -62,6 +62,8 @@ typedef enum
   COMMAND_FAST_MODE = 9,
   COMMAND_MANUAL = 10,
   COMMAND_COLOR = 11,
+  COMMAND_OPEN_ARM = 12,
+  COMMAND_CLOSE_ARM = 13,
 } TCommandType;
 
 typedef enum

@@ -387,6 +387,24 @@ void sendCommand(char command, bool manual, int* mode)
 				sendPacket(&commandPacket);
 				break;
 
+			case OPEN_ARM:
+				printf("======================================================================================\n");
+				printf("                                \033[1;31mOpen Arm\033[0m                                \n");
+				printf("======================================================================================\n");
+				printCurrentMode(*mode);
+				commandPacket.command = COMMAND_OPEN_ARM;
+				sendPacket(&commandPacket);
+				break;
+
+			case CLOSE_ARM:
+				printf("======================================================================================\n");
+				printf("                                \033[1;31mCLOSE Arm\033[0m                                \n");
+				printf("======================================================================================\n");
+				printCurrentMode(*mode);
+				commandPacket.command = COMMAND_CLOSE_ARM;
+				sendPacket(&commandPacket);
+				break;
+
 			default:
 				send_status = false; // Set status back to idle
 				printf("======================================================================================\n");
@@ -428,6 +446,7 @@ int main()
         printf("======================================================================================================\n");
         printf("  \033[1;33mWASD\033[0m - Move    \033[1;33mf\033[0m - Stop    \033[1;33me\033[0m - Get Stats    \033[1;33mr\033[0m - Clear Stats    \033[1;33mq\033[0m - Exit  \n");
         printf("  \033[1;33mm\033[0m - Toggle Manual Mode    \033[1;33mc\033[0m - Get Color    \033[1;33m1\033[0m - Slow Mode    \033[1;33m2\033[0m - Normal Mode    \033[1;33m3\033[0m - Fast Mode  \n");
+				printf("  \033[1;33mo\033[0m - Open Arm    \033[1;33mp\033[0m - Close Arm   \n");
         printf("======================================================================================================\n");
 
         if (manual) {

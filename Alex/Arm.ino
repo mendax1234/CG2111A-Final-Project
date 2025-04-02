@@ -10,6 +10,16 @@ void setupArm() {
   leftArm.write(0);
 }
 
+void openArm() {
+  rightArm.write(90);
+  leftArm.write(0);
+}
+
+void closeArm() {
+  rightArm.write(45);
+  leftArm.write(45);
+}
+
 // Process color readings and control servos
 void processColor(TColorType colorType) {
   // Determine color based on RGB frequencies
@@ -47,4 +57,3 @@ void processColor(TColorType colorType) {
       break;
   }
 }
-
