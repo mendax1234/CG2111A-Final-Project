@@ -75,7 +75,7 @@ void backward(float dist, float speed) {
 
 // Time-based
 void forwardTime(float time, float speed) {
-  dir = FORWARD;
+  dir = (TDirection) FORWARD;
   setMotorSpeed(speed);
   leftMotorsForward();
   rightMotorsForward();
