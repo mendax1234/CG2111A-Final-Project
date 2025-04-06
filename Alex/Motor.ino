@@ -110,7 +110,6 @@ void rightTime(float time, float speed) {
   stop();
 }
 
-
 void left(float ang, float speed) {
   if (ang == 0) {
     deltaTicks = 99999999; // Turn indefinitely
