@@ -51,8 +51,10 @@ volatile TDirection dir;
 
 // Constant under Auto Mode
 volatile float distance = DIST_MID;
-volatile float angleDeg = ANG_MID;
-volatile float speed = SPEED_FAST;
+volatile float angleDur = ANG_MID;
+volatile float speed = SPEED_MID;
+unsigned long lastMoveDist;
+unsigned long lastTurnTime;
 
 // Alex's Diagonal. We compute and store this once since
 // it is expensive to compute and never chanegs.
@@ -146,7 +148,7 @@ void handleCommand(TPacket *command)
         if (MANUAL) {
           left((double) command->params[0], (float) command->params[1]);
         } else {
-          left(angleDeg, speed);
+          left(angleDur, speed);
         }
       break;
 
@@ -156,7 +158,7 @@ void handleCommand(TPacket *command)
         if (MANUAL) {
           right((double) command->params[0], (float) command->params[1]);
         } else {
-          right(angleDeg, speed);
+          right(angleDur, speed);
         }
       break;
 
@@ -167,20 +169,23 @@ void handleCommand(TPacket *command)
       break;
 
     case COMMAND_SLOW_MODE:
+      speed = SPEED_SLOW;
       distance = DIST_SHORT;
-      angleDeg = ANG_SHORT;
+      angleDur = ANG_SHORT;
       sendOK();
       break;
     
     case COMMAND_NORMAL_MODE:
+      speed = SPEED_MID;
       distance = DIST_MID;
-      angleDeg = ANG_MID;
+      angleDur = ANG_MID;
       sendOK();
       break;
 
     case COMMAND_FAST_MODE:
+      speed = SPEED_FAST;
       distance = DIST_FAR;
-      angleDeg = ANG_FAR;
+      angleDur = ANG_FAR;
       sendOK();
       break;
 
@@ -200,7 +205,7 @@ void handleCommand(TPacket *command)
       MANUAL = !MANUAL; // Toggle manual mode
       if (!MANUAL) { // Reset distance and angle when toggle back to auto mode
         distance = DIST_MID;
-        angleDeg = ANG_MID;
+        angleDur = ANG_MID;
       }
       sendOK();
       break;
@@ -219,6 +224,10 @@ void handleCommand(TPacket *command)
 
     case COMMAND_CLOSE_ARM:
       closeArm();
+      sendOK();
+      break;
+
+    case COMMAND_PRINT_INST:
       sendOK();
       break;
         
@@ -250,12 +259,6 @@ void handlePacket(TPacket *packet)
 }
 
 void loop() {
-// Uncomment the code below for Step 2 of Activity 3 in Week 8 Studio 2
-  // backward(0, 100);
-
-// Uncomment the code below for Week 9 Studio 2
-
- // put your main code here, to run repeatedly:
   TPacket recvPacket; // This holds commands from the Pi
 
   TResult result = readPacket(&recvPacket);
@@ -273,8 +276,29 @@ void loop() {
     }
   }
 
-  // Optimized version of the above
-  if (deltaDist > 0) {
+  // WASD move
+  if (distance > 0) {
+    if ((dir == FORWARD && millis() - lastMoveDist >= distance) ||
+        (dir == BACKWARD && millis() - lastMoveDist >= distance) ||
+        (dir == (TDirection) STOP)) {
+      // deltaDist = 0;
+      // newDist = 0;
+      stop();
+    }
+  } 
+  
+  if (angleDur > 0) {
+    if ((dir == LEFT && millis() - lastTurnTime >= angleDur) ||
+        (dir == RIGHT && millis() - lastTurnTime >= angleDur) ||
+        (dir == (TDirection) STOP)) {
+      // deltaTicks = 0;
+      // targetTicks = 0;
+      stop();
+    }
+  }
+  /* 
+  // Distance control
+    if (deltaDist > 0) {
     if ((dir == FORWARD && forwardDist > newDist) ||
         (dir == BACKWARD && reverseDist > newDist) ||
         (dir == (TDirection) STOP)) {
@@ -282,8 +306,9 @@ void loop() {
       newDist = 0;
       stop();
     }
-  }
+  } 
 
+  // Degree Control
   if (deltaTicks > 0) {
     if ((dir == LEFT && leftReverseTicksTurns >= targetTicks) ||
         (dir == RIGHT && rightReverseTicksTurns >= targetTicks) ||
@@ -293,4 +318,5 @@ void loop() {
       stop();
     }
   }
+  */
 }

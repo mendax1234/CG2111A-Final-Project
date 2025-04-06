@@ -19,6 +19,7 @@ const char MANUAL = 'm';
 const char COLOR = 'c';
 const char OPEN_ARM = 'o';
 const char CLOSE_ARM = 'p';
+const char PRINT_INST = 'i';
 const char SLOW_MODE = '1';
 const char NORMAL_MODE = '2';
 const char FAST_MODE = '3';
@@ -65,6 +66,7 @@ typedef enum
   COMMAND_COLOR = 11,
   COMMAND_OPEN_ARM = 12,
   COMMAND_CLOSE_ARM = 13,
+  COMMAND_PRINT_INST = 14,
 } TCommandType;
 #endif
 

@@ -13,14 +13,14 @@ const float SPEED_MID = 80.0;
 const float SPEED_FAST = 100.0;
 
 // Distance constants
-const float DIST_SHORT = 2.0;
-const float DIST_MID = 5.0;
-const float DIST_FAR = 25.0;
+const float DIST_SHORT = 50.0;
+const float DIST_MID = 100.0;
+const float DIST_FAR = 250.0;
 
 // Angle constants
-const float ANG_SHORT = 10.0;
-const float ANG_MID = 30.0;
-const float ANG_FAR = 60.0;
+const float ANG_SHORT = 50.0;
+const float ANG_MID = 100.0;
+const float ANG_FAR = 250.0;
 
 // Packet types
 typedef enum
@@ -64,6 +64,7 @@ typedef enum
   COMMAND_COLOR = 11,
   COMMAND_OPEN_ARM = 12,
   COMMAND_CLOSE_ARM = 13,
+  COMMAND_PRINT_INST = 14,
 } TCommandType;
 
 typedef enum
