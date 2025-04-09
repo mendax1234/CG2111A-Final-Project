@@ -1,0 +1,317 @@
+===============================
+= Setting up the environment =
+===============================
+
+Changing directory to the location of the script...
+Directory changed to /root/alex
+
+
+
+===============================
+= Installing Python          =
+===============================
+
+Python is not installed. Installing...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+Package python is not available, but is referred to by another package.
+This may mean that the package is missing, has been obsoleted, or
+is only available from another source
+However the following packages replace it:
+  2to3 python-is-python3
+
+E: Package 'python' has no installation candidate
+
+
+
+
+===============================
+= Installing Dependencies    =
+===============================
+
+Creating virtual environment...
+Virtual environment created.
+
+Requirement already satisfied: pip in ./env/lib/python3.12/site-packages (24.0)
+Collecting pip
+  Downloading pip-25.0.1-py3-none-any.whl.metadata (3.7 kB)
+Downloading pip-25.0.1-py3-none-any.whl (1.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 6.4 MB/s eta 0:00:00
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 24.0
+    Uninstalling pip-24.0:
+      Successfully uninstalled pip-24.0
+Successfully installed pip-25.0.1
+
+Collecting numpy
+  Downloading numpy-2.2.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (62 kB)
+Collecting matplotlib
+  Downloading matplotlib-3.10.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+Requirement already satisfied: pyserial in /usr/lib/python3/dist-packages (3.5)
+Collecting contourpy>=1.0.1 (from matplotlib)
+  Downloading contourpy-1.3.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.4 kB)
+Collecting cycler>=0.10 (from matplotlib)
+  Downloading cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting fonttools>=4.22.0 (from matplotlib)
+  Downloading fonttools-4.57.0-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (102 kB)
+Collecting kiwisolver>=1.3.1 (from matplotlib)
+  Downloading kiwisolver-1.4.8-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.2 kB)
+Collecting packaging>=20.0 (from matplotlib)
+  Downloading packaging-24.2-py3-none-any.whl.metadata (3.2 kB)
+Requirement already satisfied: pillow>=8 in /usr/lib/python3/dist-packages (from matplotlib) (10.2.0)
+Requirement already satisfied: pyparsing>=2.3.1 in /usr/lib/python3/dist-packages (from matplotlib) (3.1.1)
+Collecting python-dateutil>=2.7 (from matplotlib)
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Requirement already satisfied: six>=1.5 in /usr/lib/python3/dist-packages (from python-dateutil>=2.7->matplotlib) (1.16.0)
+Downloading numpy-2.2.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.1/16.1 MB 10.7 MB/s eta 0:00:00
+Downloading matplotlib-3.10.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (8.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.6/8.6 MB 10.9 MB/s eta 0:00:00
+Downloading contourpy-1.3.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (323 kB)
+Downloading cycler-0.12.1-py3-none-any.whl (8.3 kB)
+Downloading fonttools-4.57.0-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (4.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.9/4.9 MB 10.3 MB/s eta 0:00:00
+Downloading kiwisolver-1.4.8-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 10.1 MB/s eta 0:00:00
+Downloading packaging-24.2-py3-none-any.whl (65 kB)
+Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Installing collected packages: python-dateutil, packaging, numpy, kiwisolver, fonttools, cycler, contourpy, matplotlib
+Successfully installed contourpy-1.3.1 cycler-0.12.1 fonttools-4.57.0 kiwisolver-1.4.8 matplotlib-3.10.1 numpy-2.2.4 packaging-24.2 python-dateutil-2.9.0.post0
+
+Installing BreezySLAM...
+Obtaining file:///root/alex/libraries/external/BreezySLAM/python
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: BreezySLAM
+  Building editable for BreezySLAM (pyproject.toml): started
+  Building editable for BreezySLAM (pyproject.toml): finished with status 'done'
+  Created wheel for BreezySLAM: filename=breezyslam-0.1-0.editable-cp312-cp312-linux_x86_64.whl size=1441 sha256=40c31941f9857a4fed319bb9931f2ba2e75d03bd6ba258eeec23477f8d419aee
+  Stored in directory: /tmp/pip-ephem-wheel-cache-zg6cq3ap/wheels/cf/19/62/ac7d03a033aa13a80fe8cf73bd394413abe4a8a6406dd8791c
+Successfully built BreezySLAM
+Installing collected packages: BreezySLAM
+Successfully installed BreezySLAM-0.1
+
+Installing pyrplidar...
+Obtaining file:///root/alex/libraries/external/pyrplidar
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: pyserial in /usr/lib/python3/dist-packages (from pyrplidar==0.1.2) (3.5)
+Building wheels for collected packages: pyrplidar
+  Building editable for pyrplidar (pyproject.toml): started
+  Building editable for pyrplidar (pyproject.toml): finished with status 'done'
+  Created wheel for pyrplidar: filename=pyrplidar-0.1.2-0.editable-py3-none-any.whl size=3226 sha256=66ba6a3369f898317e6d918b20ffd47ca938e9a3f14de7ef181233419c734318
+  Stored in directory: /tmp/pip-ephem-wheel-cache-vu91hc7x/wheels/da/61/94/71b349fa25651267917c8313ff89ac78ab552bf9678f2271c8
+Successfully built pyrplidar
+Installing collected packages: pyrplidar
+Successfully installed pyrplidar-0.1.2
+
+Installing opencv-python...
+Collecting opencv-python
+  Downloading opencv_python-4.11.0.86-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (20 kB)
+Requirement already satisfied: numpy>=1.21.2 in ./env/lib/python3.12/site-packages (from opencv-python) (2.2.4)
+Downloading opencv_python-4.11.0.86-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (63.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.0/63.0 MB 10.8 MB/s eta 0:00:00
+Installing collected packages: opencv-python
+Successfully installed opencv-python-4.11.0.86
+
+Installing control...
+Obtaining file:///root/alex/libraries/epp2/control
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: numpy in ./env/lib/python3.12/site-packages (from control==0.1.0) (2.2.4)
+Requirement already satisfied: matplotlib in ./env/lib/python3.12/site-packages (from control==0.1.0) (3.10.1)
+Requirement already satisfied: pyserial in /usr/lib/python3/dist-packages (from control==0.1.0) (3.5)
+Requirement already satisfied: contourpy>=1.0.1 in ./env/lib/python3.12/site-packages (from matplotlib->control==0.1.0) (1.3.1)
+Requirement already satisfied: cycler>=0.10 in ./env/lib/python3.12/site-packages (from matplotlib->control==0.1.0) (0.12.1)
+Requirement already satisfied: fonttools>=4.22.0 in ./env/lib/python3.12/site-packages (from matplotlib->control==0.1.0) (4.57.0)
+Requirement already satisfied: kiwisolver>=1.3.1 in ./env/lib/python3.12/site-packages (from matplotlib->control==0.1.0) (1.4.8)
+Requirement already satisfied: packaging>=20.0 in ./env/lib/python3.12/site-packages (from matplotlib->control==0.1.0) (24.2)
+Requirement already satisfied: pillow>=8 in /usr/lib/python3/dist-packages (from matplotlib->control==0.1.0) (10.2.0)
+Requirement already satisfied: pyparsing>=2.3.1 in /usr/lib/python3/dist-packages (from matplotlib->control==0.1.0) (3.1.1)
+Requirement already satisfied: python-dateutil>=2.7 in ./env/lib/python3.12/site-packages (from matplotlib->control==0.1.0) (2.9.0.post0)
+Requirement already satisfied: six>=1.5 in /usr/lib/python3/dist-packages (from python-dateutil>=2.7->matplotlib->control==0.1.0) (1.16.0)
+Building wheels for collected packages: control
+  Building editable for control (pyproject.toml): started
+  Building editable for control (pyproject.toml): finished with status 'done'
+  Created wheel for control: filename=control-0.1.0-0.editable-py3-none-any.whl size=1268 sha256=0e3f1c522d8dfd32cdebd832bd093ede3cb1454ff67f04503afdcf066ae08f65
+  Stored in directory: /tmp/pip-ephem-wheel-cache-5njrxsgb/wheels/0c/ee/c1/159aa7a0cc4dcccebf8766f7aef54f24f78a05eae71306c0fa
+Successfully built control
+Installing collected packages: control
+Successfully installed control-0.1.0
+
+Installing display...
+Obtaining file:///root/alex/libraries/epp2/display
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: numpy in ./env/lib/python3.12/site-packages (from display==0.1.0) (2.2.4)
+Requirement already satisfied: matplotlib in ./env/lib/python3.12/site-packages (from display==0.1.0) (3.10.1)
+Requirement already satisfied: pyserial in /usr/lib/python3/dist-packages (from display==0.1.0) (3.5)
+Requirement already satisfied: contourpy>=1.0.1 in ./env/lib/python3.12/site-packages (from matplotlib->display==0.1.0) (1.3.1)
+Requirement already satisfied: cycler>=0.10 in ./env/lib/python3.12/site-packages (from matplotlib->display==0.1.0) (0.12.1)
+Requirement already satisfied: fonttools>=4.22.0 in ./env/lib/python3.12/site-packages (from matplotlib->display==0.1.0) (4.57.0)
+Requirement already satisfied: kiwisolver>=1.3.1 in ./env/lib/python3.12/site-packages (from matplotlib->display==0.1.0) (1.4.8)
+Requirement already satisfied: packaging>=20.0 in ./env/lib/python3.12/site-packages (from matplotlib->display==0.1.0) (24.2)
+Requirement already satisfied: pillow>=8 in /usr/lib/python3/dist-packages (from matplotlib->display==0.1.0) (10.2.0)
+Requirement already satisfied: pyparsing>=2.3.1 in /usr/lib/python3/dist-packages (from matplotlib->display==0.1.0) (3.1.1)
+Requirement already satisfied: python-dateutil>=2.7 in ./env/lib/python3.12/site-packages (from matplotlib->display==0.1.0) (2.9.0.post0)
+Requirement already satisfied: six>=1.5 in /usr/lib/python3/dist-packages (from python-dateutil>=2.7->matplotlib->display==0.1.0) (1.16.0)
+Building wheels for collected packages: display
+  Building editable for display (pyproject.toml): started
+  Building editable for display (pyproject.toml): finished with status 'done'
+  Created wheel for display: filename=display-0.1.0-0.editable-py3-none-any.whl size=1269 sha256=ad5b97ec112bb2d92eafc276054379861a028b576078cf2956fa02ad91b324ea
+  Stored in directory: /tmp/pip-ephem-wheel-cache-1x3dbjgr/wheels/09/69/dc/183a84166dd70edfe6d12dd119ae61211a902361ed039cbc99
+Successfully built display
+Installing collected packages: display
+Successfully installed display-0.1.0
+
+Installing lidar...
+Obtaining file:///root/alex/libraries/epp2/lidar
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: numpy in ./env/lib/python3.12/site-packages (from lidar==0.1.0) (2.2.4)
+Requirement already satisfied: matplotlib in ./env/lib/python3.12/site-packages (from lidar==0.1.0) (3.10.1)
+Requirement already satisfied: pyserial in /usr/lib/python3/dist-packages (from lidar==0.1.0) (3.5)
+Requirement already satisfied: contourpy>=1.0.1 in ./env/lib/python3.12/site-packages (from matplotlib->lidar==0.1.0) (1.3.1)
+Requirement already satisfied: cycler>=0.10 in ./env/lib/python3.12/site-packages (from matplotlib->lidar==0.1.0) (0.12.1)
+Requirement already satisfied: fonttools>=4.22.0 in ./env/lib/python3.12/site-packages (from matplotlib->lidar==0.1.0) (4.57.0)
+Requirement already satisfied: kiwisolver>=1.3.1 in ./env/lib/python3.12/site-packages (from matplotlib->lidar==0.1.0) (1.4.8)
+Requirement already satisfied: packaging>=20.0 in ./env/lib/python3.12/site-packages (from matplotlib->lidar==0.1.0) (24.2)
+Requirement already satisfied: pillow>=8 in /usr/lib/python3/dist-packages (from matplotlib->lidar==0.1.0) (10.2.0)
+Requirement already satisfied: pyparsing>=2.3.1 in /usr/lib/python3/dist-packages (from matplotlib->lidar==0.1.0) (3.1.1)
+Requirement already satisfied: python-dateutil>=2.7 in ./env/lib/python3.12/site-packages (from matplotlib->lidar==0.1.0) (2.9.0.post0)
+Requirement already satisfied: six>=1.5 in /usr/lib/python3/dist-packages (from python-dateutil>=2.7->matplotlib->lidar==0.1.0) (1.16.0)
+Building wheels for collected packages: lidar
+  Building editable for lidar (pyproject.toml): started
+  Building editable for lidar (pyproject.toml): finished with status 'done'
+  Created wheel for lidar: filename=lidar-0.1.0-0.editable-py3-none-any.whl size=1247 sha256=b8a93dee002b436bf1e1c39ff7f7d48325aa38ae6da69fba44eb002a2eb2872c
+  Stored in directory: /tmp/pip-ephem-wheel-cache-xh_2mx5b/wheels/6b/f7/d0/1b920110e766478647ba61c94610b3584847ca932d0fce0893
+Successfully built lidar
+Installing collected packages: lidar
+Successfully installed lidar-0.1.0
+
+Installing networking...
+Obtaining file:///root/alex/libraries/epp2/networking
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: numpy in ./env/lib/python3.12/site-packages (from networking==0.1.0) (2.2.4)
+Requirement already satisfied: matplotlib in ./env/lib/python3.12/site-packages (from networking==0.1.0) (3.10.1)
+Requirement already satisfied: pyserial in /usr/lib/python3/dist-packages (from networking==0.1.0) (3.5)
+Requirement already satisfied: contourpy>=1.0.1 in ./env/lib/python3.12/site-packages (from matplotlib->networking==0.1.0) (1.3.1)
+Requirement already satisfied: cycler>=0.10 in ./env/lib/python3.12/site-packages (from matplotlib->networking==0.1.0) (0.12.1)
+Requirement already satisfied: fonttools>=4.22.0 in ./env/lib/python3.12/site-packages (from matplotlib->networking==0.1.0) (4.57.0)
+Requirement already satisfied: kiwisolver>=1.3.1 in ./env/lib/python3.12/site-packages (from matplotlib->networking==0.1.0) (1.4.8)
+Requirement already satisfied: packaging>=20.0 in ./env/lib/python3.12/site-packages (from matplotlib->networking==0.1.0) (24.2)
+Requirement already satisfied: pillow>=8 in /usr/lib/python3/dist-packages (from matplotlib->networking==0.1.0) (10.2.0)
+Requirement already satisfied: pyparsing>=2.3.1 in /usr/lib/python3/dist-packages (from matplotlib->networking==0.1.0) (3.1.1)
+Requirement already satisfied: python-dateutil>=2.7 in ./env/lib/python3.12/site-packages (from matplotlib->networking==0.1.0) (2.9.0.post0)
+Requirement already satisfied: six>=1.5 in /usr/lib/python3/dist-packages (from python-dateutil>=2.7->matplotlib->networking==0.1.0) (1.16.0)
+Building wheels for collected packages: networking
+  Building editable for networking (pyproject.toml): started
+  Building editable for networking (pyproject.toml): finished with status 'done'
+  Created wheel for networking: filename=networking-0.1.0-0.editable-py3-none-any.whl size=1308 sha256=9555502edc9057c60abb68963512aac43e158b16e93d620e5c85d14cf31556dc
+  Stored in directory: /tmp/pip-ephem-wheel-cache-5a06v3uk/wheels/c7/c7/24/fd57957ce97fbac0c64cbee0ded532c06b481760d3d326398f
+Successfully built networking
+Installing collected packages: networking
+Successfully installed networking-0.1.0
+
+Installing pubsub...
+Obtaining file:///root/alex/libraries/epp2/pubsub
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: numpy in ./env/lib/python3.12/site-packages (from pubsub==0.1.0) (2.2.4)
+Requirement already satisfied: matplotlib in ./env/lib/python3.12/site-packages (from pubsub==0.1.0) (3.10.1)
+Requirement already satisfied: pyserial in /usr/lib/python3/dist-packages (from pubsub==0.1.0) (3.5)
+Requirement already satisfied: contourpy>=1.0.1 in ./env/lib/python3.12/site-packages (from matplotlib->pubsub==0.1.0) (1.3.1)
+Requirement already satisfied: cycler>=0.10 in ./env/lib/python3.12/site-packages (from matplotlib->pubsub==0.1.0) (0.12.1)
+Requirement already satisfied: fonttools>=4.22.0 in ./env/lib/python3.12/site-packages (from matplotlib->pubsub==0.1.0) (4.57.0)
+Requirement already satisfied: kiwisolver>=1.3.1 in ./env/lib/python3.12/site-packages (from matplotlib->pubsub==0.1.0) (1.4.8)
+Requirement already satisfied: packaging>=20.0 in ./env/lib/python3.12/site-packages (from matplotlib->pubsub==0.1.0) (24.2)
+Requirement already satisfied: pillow>=8 in /usr/lib/python3/dist-packages (from matplotlib->pubsub==0.1.0) (10.2.0)
+Requirement already satisfied: pyparsing>=2.3.1 in /usr/lib/python3/dist-packages (from matplotlib->pubsub==0.1.0) (3.1.1)
+Requirement already satisfied: python-dateutil>=2.7 in ./env/lib/python3.12/site-packages (from matplotlib->pubsub==0.1.0) (2.9.0.post0)
+Requirement already satisfied: six>=1.5 in /usr/lib/python3/dist-packages (from python-dateutil>=2.7->matplotlib->pubsub==0.1.0) (1.16.0)
+Building wheels for collected packages: pubsub
+  Building editable for pubsub (pyproject.toml): started
+  Building editable for pubsub (pyproject.toml): finished with status 'done'
+  Created wheel for pubsub: filename=pubsub-0.1.0-0.editable-py3-none-any.whl size=1256 sha256=54a304ab96fac2bafdc7e3fcc09964040f2ececce93951b7c5a69835e55c9223
+  Stored in directory: /tmp/pip-ephem-wheel-cache-30ylvnoh/wheels/35/15/d4/6107133f7034537466dbc877205c1cdbe979864614b3dd56e3
+Successfully built pubsub
+Installing collected packages: pubsub
+Successfully installed pubsub-0.1.0
+
+Installing slam...
+Obtaining file:///root/alex/libraries/epp2/slam
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: numpy in ./env/lib/python3.12/site-packages (from slam==0.1.0) (2.2.4)
+Requirement already satisfied: matplotlib in ./env/lib/python3.12/site-packages (from slam==0.1.0) (3.10.1)
+Requirement already satisfied: pyserial in /usr/lib/python3/dist-packages (from slam==0.1.0) (3.5)
+Requirement already satisfied: contourpy>=1.0.1 in ./env/lib/python3.12/site-packages (from matplotlib->slam==0.1.0) (1.3.1)
+Requirement already satisfied: cycler>=0.10 in ./env/lib/python3.12/site-packages (from matplotlib->slam==0.1.0) (0.12.1)
+Requirement already satisfied: fonttools>=4.22.0 in ./env/lib/python3.12/site-packages (from matplotlib->slam==0.1.0) (4.57.0)
+Requirement already satisfied: kiwisolver>=1.3.1 in ./env/lib/python3.12/site-packages (from matplotlib->slam==0.1.0) (1.4.8)
+Requirement already satisfied: packaging>=20.0 in ./env/lib/python3.12/site-packages (from matplotlib->slam==0.1.0) (24.2)
+Requirement already satisfied: pillow>=8 in /usr/lib/python3/dist-packages (from matplotlib->slam==0.1.0) (10.2.0)
+Requirement already satisfied: pyparsing>=2.3.1 in /usr/lib/python3/dist-packages (from matplotlib->slam==0.1.0) (3.1.1)
+Requirement already satisfied: python-dateutil>=2.7 in ./env/lib/python3.12/site-packages (from matplotlib->slam==0.1.0) (2.9.0.post0)
+Requirement already satisfied: six>=1.5 in /usr/lib/python3/dist-packages (from python-dateutil>=2.7->matplotlib->slam==0.1.0) (1.16.0)
+Building wheels for collected packages: slam
+  Building editable for slam (pyproject.toml): started
+  Building editable for slam (pyproject.toml): finished with status 'done'
+  Created wheel for slam: filename=slam-0.1.0-0.editable-py3-none-any.whl size=1231 sha256=730bc6c745e4a614c3a59d9f6213bf41b9d3567614af94fee6f4b6d3646ccd46
+  Stored in directory: /tmp/pip-ephem-wheel-cache-xctq75p1/wheels/1a/24/41/ab1e95af126369dd43cff0695f6585e7a692a30ab202fd7100
+Successfully built slam
+Installing collected packages: slam
+Successfully installed slam-0.1.0
+
+Setup complete. Exiting...
