@@ -48,75 +48,41 @@ void setMotorSpeed(float speed) {
 // Distance-based
 // Movement functions
 void forward(float dist, float speed) {
-  if (dist > 0) {
-    deltaDist = dist;
-  } else {
-    deltaDist = 9999999; // Move indefinitely
-  }
-  newDist = forwardDist + deltaDist;
-  dir = FORWARD;
+  // if (dist > 0) {
+  //   deltaDist = dist;
+  // } else {
+  //   deltaDist = 9999999; // Move indefinitely
+  // }
+  // newDist = forwardDist + deltaDist;
+  lastMoveDist = millis();
+  dir = (TDirection) FORWARD;
   setMotorSpeed(speed);
   leftMotorsForward();
   rightMotorsForward();
 }
 
 void backward(float dist, float speed) {
-  if (dist > 0) {
-    deltaDist = dist;
-  } else {
-    deltaDist = 9999999; // Move indefinitely
-  }
-  newDist = reverseDist + deltaDist;
+  // if (dist > 0) {
+  //   deltaDist = dist;
+  // } else {
+  //   deltaDist = 9999999; // Move indefinitely
+  // }
+  // newDist = reverseDist + deltaDist;
+  lastMoveDist = millis();
   dir = (TDirection) BACKWARD;
   setMotorSpeed(speed);
   leftMotorsReverse();
   rightMotorsReverse();
-}
-
-// Time-based
-void forwardTime(float time, float speed) {
-  dir = (TDirection) FORWARD;
-  setMotorSpeed(speed);
-  leftMotorsForward();
-  rightMotorsForward();
-  delay(time*10); // Run for the specified time in milliseconds
-  stop();
-}
-
-void backwardTime(float time, float speed) {
-  dir = (TDirection) BACKWARD;
-  setMotorSpeed(speed);
-  leftMotorsReverse();
-  rightMotorsReverse();
-  delay(time*10); // Run for the specified time in milliseconds
-  stop();
-}
-
-void leftTime(float time, float speed) {
-  dir = (TDirection) LEFT;
-  setMotorSpeed(speed);
-  leftMotorsForward();
-  rightMotorsReverse();
-  delay(time*10); // Run for the specified time in milliseconds
-  stop();
-}
-
-void rightTime(float time, float speed) {
-  dir = (TDirection) RIGHT;
-  setMotorSpeed(speed);
-  leftMotorsReverse();
-  rightMotorsForward();
-  delay(time*10); // Run for the specified time in milliseconds
-  stop();
 }
 
 void left(float ang, float speed) {
-  if (ang == 0) {
-    deltaTicks = 99999999; // Turn indefinitely
-  } else {
-    deltaTicks = computeDeltaTicks(ang); // Assumes this function exists elsewhere
-  }
-  targetTicks = leftReverseTicksTurns + deltaTicks;
+  // if (ang == 0) {
+  //   deltaTicks = 99999999; // Turn indefinitely
+  // } else {
+  //   deltaTicks = computeDeltaTicks(ang); // Assumes this function exists elsewhere
+  // }
+  // targetTicks = leftReverseTicksTurns + deltaTicks;
+  lastTurnTime = millis();
   dir = (TDirection) LEFT;
   setMotorSpeed(speed);
   leftMotorsForward();
@@ -124,12 +90,13 @@ void left(float ang, float speed) {
 }
 
 void right(float ang, float speed) {
-  if (ang == 0) {
-    deltaTicks = 99999999; // Turn indefinitely
-  } else {
-    deltaTicks = computeDeltaTicks(ang); // Assumes this function exists elsewhere
-  }
-  targetTicks = rightReverseTicksTurns + deltaTicks;
+  // if (ang == 0) {
+  //   deltaTicks = 99999999; // Turn indefinitely
+  // } else {
+  //   deltaTicks = computeDeltaTicks(ang); // Assumes this function exists elsewhere
+  // }
+  // targetTicks = rightReverseTicksTurns + deltaTicks;
+  lastTurnTime = millis();
   dir = (TDirection) RIGHT;
   setMotorSpeed(speed);
   leftMotorsReverse();
