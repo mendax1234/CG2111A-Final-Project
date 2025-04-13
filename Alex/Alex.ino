@@ -52,7 +52,7 @@ volatile TDirection dir;
 // Constant under Auto Mode
 volatile float distance = DIST_MID;
 volatile float angleDur = ANG_MID;
-volatile float speed = SPEED_MID;
+volatile float speed = SPEED_FAST;
 unsigned long lastMoveDist;
 unsigned long lastTurnTime;
 
@@ -169,14 +169,14 @@ void handleCommand(TPacket *command)
       break;
 
     case COMMAND_SLOW_MODE:
-      speed = SPEED_SLOW;
+      speed = SPEED_FAST;
       distance = DIST_SHORT;
       angleDur = ANG_SHORT;
       sendOK();
       break;
     
     case COMMAND_NORMAL_MODE:
-      speed = SPEED_MID;
+      speed = SPEED_FAST;
       distance = DIST_MID;
       angleDur = ANG_MID;
       sendOK();
