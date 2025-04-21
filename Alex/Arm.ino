@@ -24,28 +24,28 @@ void closeArm() {
 void processColor(TColorType colorType) {
   // Determine color based on RGB frequencies
   switch (colorType) {
-    case WHITE:
-      openArm();
-      break;
-      
-    case RED:
-      closeArm();
-      break;
-      
-    case BLUE:
-      openArm();
-      break;
-      
-    case GREEN:
-      closeArm();
-      break;
-      
-    case UNKNOWN:
-      openArm();
-      break;
-      
-    default:
-      openArm();
-      break;
+  case WHITE:
+    openArm();
+    break;
+
+  case RED:
+    closeArm();
+    break;
+
+  case BLUE:
+    openArm();
+    break;
+
+  case GREEN:
+    closeArm();
+    break;
+
+  case UNKNOWN:
+    openArm();
+    break;
+
+  default:
+    openArm();
+    break;
   }
 }

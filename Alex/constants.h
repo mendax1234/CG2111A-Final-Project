@@ -1,13 +1,13 @@
 #ifndef __CONSTANTS_INC__
 #define __CONSTANTS_INC__
 
-/* 
+/*
  *  This file containts all the packet types, commands
  *  and status constants
- *  
+ *
  */
 
- // Motor speed constants
+// Motor speed constants
 const float SPEED_SLOW = 60.0;
 const float SPEED_MID = 80.0;
 const float SPEED_FAST = 100.0;
@@ -34,14 +34,13 @@ typedef enum {
 // Response types. This goes into the command field
 typedef enum {
   RESP_OK = 0,
-  RESP_STATUS=1,
+  RESP_STATUS = 1,
   RESP_BAD_PACKET = 2,
   RESP_BAD_CHECKSUM = 3,
   RESP_BAD_COMMAND = 4,
   RESP_BAD_RESPONSE = 5,
   RESP_COLOR = 6,
 } TResponseType;
-
 
 // Commands
 // For direction commands, param[0] = distance in cm to move
@@ -65,14 +64,14 @@ typedef enum {
 } TCommandType;
 
 typedef enum {
-  STOP=0,
-  FORWARD=1,
-  BACKWARD=2,
-  LEFT=3,
-  RIGHT=4
+  STOP = 0,
+  FORWARD = 1,
+  BACKWARD = 2,
+  LEFT = 3,
+  RIGHT = 4
 } TDirection;
 
-typedef enum  {
+typedef enum {
   WHITE = 0,
   RED = 1,
   BLUE = 2,

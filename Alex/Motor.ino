@@ -1,10 +1,10 @@
 #include <AFMotor.h>
 
 // Motor pin definitions
-#define FRONT_LEFT   4 // M4 on the driver shield
-#define FRONT_RIGHT  1 // M1 on the driver shield
-#define BACK_LEFT    3 // M3 on the driver shield
-#define BACK_RIGHT   2 // M2 on the driver shield
+#define FRONT_LEFT 4  // M4 on the driver shield
+#define FRONT_RIGHT 1 // M1 on the driver shield
+#define BACK_LEFT 3   // M3 on the driver shield
+#define BACK_RIGHT 2  // M2 on the driver shield
 
 // Motor objects
 AF_DCMotor motorFL(FRONT_LEFT);
@@ -37,8 +37,10 @@ void rightMotorsReverse() {
 // Set speed for all motors (speed in percentage, 0-100)
 void setMotorSpeed(float speed) {
   int speed_scaled = (speed / 100.0) * 255; // Scale to 0-255
-  if (speed_scaled < 0) speed_scaled = 0;
-  if (speed_scaled > 255) speed_scaled = 255;
+  if (speed_scaled < 0)
+    speed_scaled = 0;
+  if (speed_scaled > 255)
+    speed_scaled = 255;
   motorFL.setSpeed(speed_scaled);
   motorFR.setSpeed(speed_scaled);
   motorBL.setSpeed(speed_scaled);
@@ -55,7 +57,7 @@ void forward(float dist, float speed) {
   // }
   // newDist = forwardDist + deltaDist;
   lastMoveDist = millis();
-  dir = (TDirection) FORWARD;
+  dir = (TDirection)FORWARD;
   setMotorSpeed(speed);
   leftMotorsForward();
   rightMotorsForward();
@@ -69,7 +71,7 @@ void backward(float dist, float speed) {
   // }
   // newDist = reverseDist + deltaDist;
   lastMoveDist = millis();
-  dir = (TDirection) BACKWARD;
+  dir = (TDirection)BACKWARD;
   setMotorSpeed(speed);
   leftMotorsReverse();
   rightMotorsReverse();
@@ -79,11 +81,12 @@ void left(float ang, float speed) {
   // if (ang == 0) {
   //   deltaTicks = 99999999; // Turn indefinitely
   // } else {
-  //   deltaTicks = computeDeltaTicks(ang); // Assumes this function exists elsewhere
+  //   deltaTicks = computeDeltaTicks(ang); // Assumes this function exists
+  //   elsewhere
   // }
   // targetTicks = leftReverseTicksTurns + deltaTicks;
   lastTurnTime = millis();
-  dir = (TDirection) LEFT;
+  dir = (TDirection)LEFT;
   setMotorSpeed(speed);
   leftMotorsForward();
   rightMotorsReverse();
@@ -93,18 +96,19 @@ void right(float ang, float speed) {
   // if (ang == 0) {
   //   deltaTicks = 99999999; // Turn indefinitely
   // } else {
-  //   deltaTicks = computeDeltaTicks(ang); // Assumes this function exists elsewhere
+  //   deltaTicks = computeDeltaTicks(ang); // Assumes this function exists
+  //   elsewhere
   // }
   // targetTicks = rightReverseTicksTurns + deltaTicks;
   lastTurnTime = millis();
-  dir = (TDirection) RIGHT;
+  dir = (TDirection)RIGHT;
   setMotorSpeed(speed);
   leftMotorsReverse();
   rightMotorsForward();
 }
 
 void stop() {
-  dir = (TDirection) STOP;
+  dir = (TDirection)STOP;
   motorFL.run(RELEASE);
   motorFR.run(RELEASE);
   motorBL.run(RELEASE);

@@ -13,3 +13,6 @@ Run the generated executable file to start sending commands to the Arduino to op
 ```bash
 ./Alex-pi
 ```
+
+## Format
+To make our code clean and easy to read, also to keep the good coding habit from CS1010, we use `clang-format` to format our code.

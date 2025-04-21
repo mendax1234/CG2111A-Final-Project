@@ -1,14 +1,15 @@
 /*
  * Setup and start codes for serial communications
- * 
+ *
  */
-// Set up the serial connection. For now we are using 
+// Set up the serial connection. For now we are using
 // Arduino Wiring, you will replace this later
 // with bare-metal code.
 void setupSerial() {
   // To replace later with bare-metal.
   Serial.begin(9600);
-  // Change Serial to Serial2/Serial3/Serial4 in later labs when using the other UARTs
+  // Change Serial to Serial2/Serial3/Serial4 in later labs when using the other
+  // UARTs
 }
 
 // Start the serial connection. For now we are using
@@ -18,18 +19,18 @@ void setupSerial() {
 void startSerial() {
   // Empty for now. To be replaced with bare-metal code
   // later on.
-  
 }
 
 // Read the serial port. Returns the read character in
-// ch if available. Also returns TRUE if ch is valid. 
+// ch if available. Also returns TRUE if ch is valid.
 // This will be replaced later with bare-metal code.
 
 int readSerial(char *buffer) {
-  int count=0;
+  int count = 0;
 
-  // Change Serial to Serial2/Serial3/Serial4 in later labs when using other UARTs
-  while(Serial.available())
+  // Change Serial to Serial2/Serial3/Serial4 in later labs when using other
+  // UARTs
+  while (Serial.available())
     buffer[count++] = Serial.read();
 
   return count;
@@ -40,29 +41,30 @@ int readSerial(char *buffer) {
 
 void writeSerial(const char *buffer, int len) {
   Serial.write(buffer, len);
-  // Change Serial to Serial2/Serial3/Serial4 in later labs when using other UARTs
+  // Change Serial to Serial2/Serial3/Serial4 in later labs when using other
+  // UARTs
 }
 
 /*
- * 
+ *
  * Alex Communication Routines.
- * 
+ *
  */
- 
+
 TResult readPacket(TPacket *packet) {
-    // Reads in data from the serial port and
-    // deserializes it.Returns deserialized
-    // data in "packet".
-    
-    char buffer[PACKET_SIZE];
-    int len;
+  // Reads in data from the serial port and
+  // deserializes it.Returns deserialized
+  // data in "packet".
 
-    len = readSerial(buffer);
+  char buffer[PACKET_SIZE];
+  int len;
 
-    if(len == 0)
-      return PACKET_INCOMPLETE;
-    else
-      return deserialize(buffer, len, packet);
+  len = readSerial(buffer);
+
+  if (len == 0)
+    return PACKET_INCOMPLETE;
+  else
+    return deserialize(buffer, len, packet);
 }
 
 void sendResponse(TPacket *packet) {

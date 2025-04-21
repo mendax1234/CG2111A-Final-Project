@@ -1,12 +1,13 @@
 void setupColor() {
-  pinMode(S0,OUTPUT);    //pin modes
-  pinMode(S1,OUTPUT);
-  pinMode(S2,OUTPUT);
-  pinMode(S3,OUTPUT);
-  pinMode(sensorOut,INPUT);
+  pinMode(S0, OUTPUT); // pin modes
+  pinMode(S1, OUTPUT);
+  pinMode(S2, OUTPUT);
+  pinMode(S3, OUTPUT);
+  pinMode(sensorOut, INPUT);
 
-  digitalWrite(S0,HIGH); //Putting S0/S1 on HIGH/HIGH levels  means the output frequency scalling is at 100% (recommended)
-  digitalWrite(S1,HIGH);  //LOW/LOW is off HIGH/LOW is 20% and LOW/HIGH is  2%
+  digitalWrite(S0, HIGH); // Putting S0/S1 on HIGH/HIGH levels  means the output
+                          // frequency scalling is at 100% (recommended)
+  digitalWrite(S1, HIGH); // LOW/LOW is off HIGH/LOW is 20% and LOW/HIGH is  2%
 }
 
 int avgFREQ() {
@@ -18,17 +19,17 @@ int avgFREQ() {
   return total / 5;
 }
 
-void findColor() { 
+void findColor() {
   digitalWrite(S2, LOW);
   digitalWrite(S3, LOW);
   delay(colorSensorDelay);
   redFreq = avgFREQ();
-  
+
   digitalWrite(S2, HIGH);
   digitalWrite(S3, HIGH);
   delay(colorSensorDelay);
   greenFreq = avgFREQ();
-  
+
   digitalWrite(S2, LOW);
   digitalWrite(S3, HIGH);
   delay(colorSensorDelay);
@@ -64,11 +65,11 @@ void sendColor(TColorType colorType) {
   TPacket colorPacket;
   colorPacket.packetType = PACKET_TYPE_RESPONSE;
   colorPacket.command = RESP_COLOR;
-  
+
   colorPacket.params[0] = redFreq;
   colorPacket.params[1] = greenFreq;
   colorPacket.params[2] = blueFreq;
   colorPacket.params[3] = colorType;
-  
-  sendResponse(&colorPacket);  
+
+  sendResponse(&colorPacket);
 }
