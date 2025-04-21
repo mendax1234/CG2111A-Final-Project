@@ -84,10 +84,8 @@ void handleColor(TPacket *packet) {
 	printf("\n--------------------------------------\n\n");
 }
 
-void handleError(TResult error)
-{
-	switch(error)
-	{
+void handleError(TResult error) {
+	switch(error) {
 		case PACKET_BAD:
 			printf("ERROR: Bad Magic Number\n");
 			break;
@@ -117,11 +115,9 @@ void handleStatus(TPacket *packet)
 	printf("\n---------------------------------------\n\n");
 }
 
-void handleResponse(TPacket *packet)
-{
+void handleResponse(TPacket *packet) {
 	// The response code is stored in command
-	switch(packet->command)
-	{
+	switch(packet->command) {
 		case RESP_OK:
 			printf("Command OK\n");
 			send_status = false;
@@ -140,11 +136,9 @@ void handleResponse(TPacket *packet)
 	}
 }
 
-void handleErrorResponse(TPacket *packet)
-{
+void handleErrorResponse(TPacket *packet) {
 	// The error code is returned in command
-	switch(packet->command)
-	{
+	switch(packet->command) {
 		case RESP_BAD_PACKET:
 			printf("Arduino received bad magic number\n");
 		break;
@@ -166,15 +160,12 @@ void handleErrorResponse(TPacket *packet)
 	}
 }
 
-void handleMessage(TPacket *packet)
-{
+void handleMessage(TPacket *packet) {
 	printf("Message from Alex: %s\n", packet->data);
 }
 
-void handlePacket(TPacket *packet)
-{
-	switch(packet->packetType)
-	{
+void handlePacket(TPacket *packet) {
+	switch(packet->packetType) {
 		case PACKET_TYPE_COMMAND:
 				// Only we send command packets, so ignore
 			break;
@@ -193,54 +184,47 @@ void handlePacket(TPacket *packet)
 	}
 }
 
-void sendPacket(TPacket *packet)
-{
+void sendPacket(TPacket *packet) {
 	char buffer[PACKET_SIZE];
 	int len = serialize(buffer, packet, sizeof(TPacket));
 
 	serialWrite(buffer, len);
 }
 
-void *receiveThread(void *p)
-{
+void *receiveThread(void *p) {
 	char buffer[PACKET_SIZE];
 	int len;
 	TPacket packet;
 	TResult result;
 	int counter=0;
 
-	while(1)
-	{
+	while(1) {
 		len = serialRead(buffer);
-		counter+=len;
-		if(len > 0)
-		{
+		counter += len;
+		if(len > 0) {
 			result = deserialize(buffer, len, &packet);
 
-			if(result == PACKET_OK)
-			{
+			if(result == PACKET_OK) {
 				counter=0;
 				handlePacket(&packet);
 			}
-			else 
-				if(result != PACKET_INCOMPLETE)
-				{
+			else {
+				if(result != PACKET_INCOMPLETE) {
 					printf("PACKET ERROR\n");
 					handleError(result);
 				}
+			}
 		}
 	}
 }
 
-void flushInput()
-{
+void flushInput() {
 	char c;
 
 	while((c = getchar()) != '\n' && c != EOF);
 }
 
-void getParams(TPacket *commandPacket)
-{
+void getParams(TPacket *commandPacket) {
 	printf("Enter distance/angle in cm/degrees (e.g. 50) and power in %% (e.g. 75) separated by space.\n");
 	printf("E.g. 50 75 means go at 50 cm at 75%% power for forward/backward, or 50 degrees left or right turn at 75%%  power\n");
 	scanf("%d %d", &commandPacket->params[0], &commandPacket->params[1]);
@@ -249,15 +233,15 @@ void getParams(TPacket *commandPacket)
 
 void printCurrentMode(int mode) {
 	switch (mode) {
-			case COMMAND_SLOW_MODE:
-					printf("                           Currently in \033[1;33mSLOW MODE\033[0m                           \n");
-					break;
-			case COMMAND_NORMAL_MODE:
-					printf("                          Currently in \033[1;33mNORMAL MODE\033[0m                          \n");
-					break;
-			case COMMAND_FAST_MODE:
-					printf("                           Currently in \033[1;33mFAST MODE\033[0m                           \n");
-					break;
+		case COMMAND_SLOW_MODE:
+				printf("                           Currently in \033[1;33mSLOW MODE\033[0m                           \n");
+			break;
+		case COMMAND_NORMAL_MODE:
+				printf("                          Currently in \033[1;33mNORMAL MODE\033[0m                          \n");
+			break;
+		case COMMAND_FAST_MODE:
+				printf("                           Currently in \033[1;33mFAST MODE\033[0m                           \n");
+			break;
 	}
 	printf("======================================================================================\n");
 }
@@ -272,212 +256,208 @@ void printInstructions() {
 	printf("======================================================================================================\n");
 }
 
-void sendCommand(char command, bool manual, int* mode)
-{
+void sendCommand(char command, bool manual, int* mode) {
 	TPacket commandPacket;
 
 	commandPacket.packetType = PACKET_TYPE_COMMAND;
 	command = tolower(command);
 
-	switch(command)
-	{
-			case FORWARD:
-					printf("======================================================================================\n");
-					printf("                                    \033[1;36mFORWARD\033[0m                                    \n");
-					printCurrentMode(*mode);
-					if (manual) getParams(&commandPacket);
-					commandPacket.command = COMMAND_FORWARD;
-					sendPacket(&commandPacket);
-					break;
+	switch(command) {
+		case FORWARD:
+				printf("======================================================================================\n");
+				printf("                                    \033[1;36mFORWARD\033[0m                                    \n");
+				printCurrentMode(*mode);
+				if (manual) getParams(&commandPacket);
+				commandPacket.command = COMMAND_FORWARD;
+				sendPacket(&commandPacket);
+			break;
 
-			case REVERSE:
-					printf("======================================================================================\n");
-					printf("                                    \033[1;36mREVERSE\033[0m                                    \n");
-					printCurrentMode(*mode);
-					if (manual) getParams(&commandPacket);
-					commandPacket.command = COMMAND_REVERSE;
-					sendPacket(&commandPacket);
-					break;
+		case REVERSE:
+				printf("======================================================================================\n");
+				printf("                                    \033[1;36mREVERSE\033[0m                                    \n");
+				printCurrentMode(*mode);
+				if (manual) getParams(&commandPacket);
+				commandPacket.command = COMMAND_REVERSE;
+				sendPacket(&commandPacket);
+			break;
 
-			case LEFT:
-					printf("======================================================================================\n");
-					printf("                                      \033[1;36mLEFT\033[0m                                      \n");
-					printCurrentMode(*mode);
-					if (manual) getParams(&commandPacket);
-					commandPacket.command = COMMAND_TURN_LEFT;
-					sendPacket(&commandPacket);
-					break;
+		case LEFT:
+				printf("======================================================================================\n");
+				printf("                                      \033[1;36mLEFT\033[0m                                      \n");
+				printCurrentMode(*mode);
+				if (manual) getParams(&commandPacket);
+				commandPacket.command = COMMAND_TURN_LEFT;
+				sendPacket(&commandPacket);
+			break;
 
-			case RIGHT:
-					printf("======================================================================================\n");
-					printf("                                     \033[1;36mRIGHT\033[0m                                     \n");
-					printCurrentMode(*mode);
-					if (manual) getParams(&commandPacket);
-					commandPacket.command = COMMAND_TURN_RIGHT;
-					sendPacket(&commandPacket);
-					break;
+		case RIGHT:
+				printf("======================================================================================\n");
+				printf("                                     \033[1;36mRIGHT\033[0m                                     \n");
+				printCurrentMode(*mode);
+				if (manual) getParams(&commandPacket);
+				commandPacket.command = COMMAND_TURN_RIGHT;
+				sendPacket(&commandPacket);
+			break;
 
-			case STOP:
-					printf("======================================================================================\n");
-					printf("                                      \033[1;36mSTOP\033[0m                                      \n");
-					printCurrentMode(*mode);
-					commandPacket.command = COMMAND_STOP;
-					sendPacket(&commandPacket);
-					break;
+		case STOP:
+				printf("======================================================================================\n");
+				printf("                                      \033[1;36mSTOP\033[0m                                      \n");
+				printCurrentMode(*mode);
+				commandPacket.command = COMMAND_STOP;
+				sendPacket(&commandPacket);
+			break;
 
-			case CLEAR:
-					printf("======================================================================================\n");
-					printf("                                \033[1;36mCLEARING STATS\033[0m                                \n");
-					printf("======================================================================================\n");
-					commandPacket.command = COMMAND_CLEAR_STATS;
-					commandPacket.params[0] = 0;
-					sendPacket(&commandPacket);
-					break;
+		case CLEAR:
+				printf("======================================================================================\n");
+				printf("                                \033[1;36mCLEARING STATS\033[0m                                \n");
+				printf("======================================================================================\n");
+				commandPacket.command = COMMAND_CLEAR_STATS;
+				commandPacket.params[0] = 0;
+				sendPacket(&commandPacket);
+			break;
 
-			case STATS:
-					printf("======================================================================================\n");
-					printf("                                \033[1;36mGETTING STATS\033[0m                                \n");
-					printf("======================================================================================\n");
-					printCurrentMode(*mode);
-					commandPacket.command = COMMAND_GET_STATS;
-					sendPacket(&commandPacket);
-					break;
+		case STATS:
+				printf("======================================================================================\n");
+				printf("                                \033[1;36mGETTING STATS\033[0m                                \n");
+				printf("======================================================================================\n");
+				printCurrentMode(*mode);
+				commandPacket.command = COMMAND_GET_STATS;
+				sendPacket(&commandPacket);
+			break;
 
-			case SLOW_MODE:
-					printf("======================================================================================\n");
-					printf("                                 \033[1;33mSLOW MODE\033[0m                                 \n");
-					printf("======================================================================================\n");
-					*mode = COMMAND_SLOW_MODE;
-					commandPacket.command = COMMAND_SLOW_MODE;
-					sendPacket(&commandPacket);
-					break;
-					
-			case NORMAL_MODE:
-					printf("======================================================================================\n");
-					printf("                                \033[1;33mNORMAL MODE\033[0m                                \n");
-					printf("======================================================================================\n");
-					*mode = COMMAND_NORMAL_MODE;
-					commandPacket.command = COMMAND_NORMAL_MODE;
-					sendPacket(&commandPacket);
-					break;
-					
-			case FAST_MODE:
-					printf("======================================================================================\n");
-					printf("                                 \033[1;33mFAST MODE\033[0m                                 \n");
-					printf("======================================================================================\n");
-					*mode = COMMAND_FAST_MODE;
-					commandPacket.command = COMMAND_FAST_MODE;
-					sendPacket(&commandPacket);
-					break;
+		case SLOW_MODE:
+				printf("======================================================================================\n");
+				printf("                                 \033[1;33mSLOW MODE\033[0m                                 \n");
+				printf("======================================================================================\n");
+				*mode = COMMAND_SLOW_MODE;
+				commandPacket.command = COMMAND_SLOW_MODE;
+				sendPacket(&commandPacket);
+			break;
+				
+		case NORMAL_MODE:
+				printf("======================================================================================\n");
+				printf("                                \033[1;33mNORMAL MODE\033[0m                                \n");
+				printf("======================================================================================\n");
+				*mode = COMMAND_NORMAL_MODE;
+				commandPacket.command = COMMAND_NORMAL_MODE;
+				sendPacket(&commandPacket);
+			break;
+				
+		case FAST_MODE:
+				printf("======================================================================================\n");
+				printf("                                 \033[1;33mFAST MODE\033[0m                                 \n");
+				printf("======================================================================================\n");
+				*mode = COMMAND_FAST_MODE;
+				commandPacket.command = COMMAND_FAST_MODE;
+				sendPacket(&commandPacket);
+			break;
 
-			case QUIT:
-					printf("======================================================================================\n");
-					printf("                                \033[1;31mEXITING PROGRAM\033[0m                                \n");
-					printf("======================================================================================\n");
-					exitFlag=1;
-					break;
-			
-			case MANUAL:
-					printf("======================================================================================\n");
-					if (manual) 
-							printf("                                \033[1;33mMANUAL MODE\033[0m                                \n");
-					else 
-							printf("                                 \033[1;33mAUTO MODE\033[0m                                 \n");
-					printf("======================================================================================\n");
-					commandPacket.command = COMMAND_MANUAL;
-					sendPacket(&commandPacket);
-					break;
+		case QUIT:
+				printf("======================================================================================\n");
+				printf("                                \033[1;31mEXITING PROGRAM\033[0m                                \n");
+				printf("======================================================================================\n");
+				exitFlag=1;
+			break;
+		
+		case MANUAL:
+				printf("======================================================================================\n");
+				if (manual) 
+						printf("                                \033[1;33mMANUAL MODE\033[0m                                \n");
+				else 
+						printf("                                 \033[1;33mAUTO MODE\033[0m                                 \n");
+				printf("======================================================================================\n");
+				commandPacket.command = COMMAND_MANUAL;
+				sendPacket(&commandPacket);
+			break;
 
-			case COLOR:
+		case COLOR:
 				printf("======================================================================================\n");
 				printf("                                \033[1;31mGet Color\033[0m                                \n");
 				printf("======================================================================================\n");
 				printCurrentMode(*mode);
 				commandPacket.command = COMMAND_COLOR;
 				sendPacket(&commandPacket);
-				break;
+			break;
 
-			case OPEN_ARM:
+		case OPEN_ARM:
 				printf("======================================================================================\n");
 				printf("                                \033[1;31mOpen Arm\033[0m                                \n");
 				printf("======================================================================================\n");
 				printCurrentMode(*mode);
 				commandPacket.command = COMMAND_OPEN_ARM;
 				sendPacket(&commandPacket);
-				break;
+			break;
 
-			case CLOSE_ARM:
+		case CLOSE_ARM:
 				printf("======================================================================================\n");
 				printf("                                \033[1;31mCLOSE Arm\033[0m                                \n");
 				printf("======================================================================================\n");
 				printCurrentMode(*mode);
 				commandPacket.command = COMMAND_CLOSE_ARM;
 				sendPacket(&commandPacket);
-				break;
-			
-			case PRINT_INST:
+			break;
+		
+		case PRINT_INST:
 				printInstructions();
 				commandPacket.command = COMMAND_PRINT_INST;
 				sendPacket(&commandPacket);
-				break;
+			break;
 
-			default:
-				send_status = false; // Set status back to idle
-				printf("======================================================================================\n");
-				printf("                                 \033[1;31mBAD COMMAND\033[0m                                 \n");
-				printf("======================================================================================\n");
+		default:
+			send_status = false; // Set status back to idle
+			printf("======================================================================================\n");
+			printf("                                 \033[1;31mBAD COMMAND\033[0m                                 \n");
+			printf("======================================================================================\n");
 	}
 }
 
-int main()
-{
-    // Connect to the Arduino
-    startSerial(PORT_NAME, BAUD_RATE, 8, 'N', 1, 5);
+int main() {
+	// Connect to the Arduino
+	startSerial(PORT_NAME, BAUD_RATE, 8, 'N', 1, 5);
 
-    // Sleep for two seconds
-    printf("======================================================================================================\n");
-    printf("                         WELCOME TO THE CONTROL PANEL OF \033[1;32mTHE ROBONAUTS\033[0m                         \n");
-    printf("======================================================================================================\n");
-    printf("                         WAITING TWO SECONDS FOR ARDUINO TO REBOOT...                              \n");
-    sleep(2);
-    printf("                                             DONE                                                  \n");
+	// Sleep for two seconds
+	printf("======================================================================================================\n");
+	printf("                         WELCOME TO THE CONTROL PANEL OF \033[1;32mTHE ROBONAUTS\033[0m                         \n");
+	printf("======================================================================================================\n");
+	printf("                         WAITING TWO SECONDS FOR ARDUINO TO REBOOT...                              \n");
+	sleep(2);
+	printf("                                             DONE                                                  \n");
 
-    // Spawn receiver thread
-    pthread_t recv;
-    pthread_create(&recv, NULL, receiveThread, NULL);
+	// Spawn receiver thread
+	pthread_t recv;
+	pthread_create(&recv, NULL, receiveThread, NULL);
 
-    // Send a hello packet
-    TPacket helloPacket;
-    helloPacket.packetType = PACKET_TYPE_HELLO;
-    sendPacket(&helloPacket);
+	// Send a hello packet
+	TPacket helloPacket;
+	helloPacket.packetType = PACKET_TYPE_HELLO;
+	sendPacket(&helloPacket);
 
-    int manual = false;
-    int currentMode = COMMAND_NORMAL_MODE;
-		bool printInst = true;
+	int manual = false;
+	int currentMode = COMMAND_NORMAL_MODE;
+	bool printInst = true;
 
-    while (!exitFlag)
-    {
-        char ch;
-				if (printInst) {
-					printInstructions();
-					printInst = false;
-				}
-        if (manual) {
-            printf("Enter command: ");
-            scanf(" %c", &ch);
-            flushInput(); // Purge extraneous characters from input stream
-        } else {
-            ch = getch(); // Auto mode
-        }
+	while (!exitFlag) {
+		char ch;
+		if (printInst) {
+			printInstructions();
+			printInst = false;
+		}
+		if (manual) {
+			printf("Enter command: ");
+			scanf(" %c", &ch);
+			flushInput(); // Purge extraneous characters from input stream
+		} else {
+			ch = getch(); // Auto mode
+		}
 
-        manual = (ch == MANUAL) ? !manual : manual; // Toggle only when 'm' clicked
+		manual = (ch == MANUAL) ? !manual : manual; // Toggle only when 'm' clicked
 
-        if (!send_status) {
-            send_status = true;
-            sendCommand(ch, manual, &currentMode);
-        }
-    }
+		if (!send_status) {
+			send_status = true;
+			sendCommand(ch, manual, &currentMode);
+		}
+	}
 
-    printf("\nClosing connection to Arduino.\n");
-    endSerial();
+	printf("\nClosing connection to Arduino.\n");
+	endSerial();
 }

@@ -4,8 +4,7 @@
  */
 
 // Clears all our counters
-void clearCounters()
-{
+void clearCounters() {
   // Clear ticks
   leftForwardTicks=0;
   rightForwardTicks=0;
@@ -26,51 +25,45 @@ void clearCounters()
 }
 
 // Clears one particular counter
-void clearOneCounter(int which)
-{
+void clearOneCounter(int which) {
   clearCounters();
 }
 // Intialize Alex's internal states
 
-void initializeState()
-{
+void initializeState() {
   clearCounters();
 }
 
-void waitForHello()
-{
+void waitForHello() {
   int exit=0;
 
-  while(!exit)
-  {
+  while(!exit) {
     TPacket hello;
     TResult result;
     
-    do
-    {
+    do {
       result = readPacket(&hello);
     } while (result == PACKET_INCOMPLETE);
 
-    if(result == PACKET_OK)
-    {
-      if(hello.packetType == PACKET_TYPE_HELLO)
-      {
-     
-
+    if(result == PACKET_OK) {
+      if(hello.packetType == PACKET_TYPE_HELLO) {
         sendOK();
         exit=1;
       }
-      else
+      else {
         sendBadResponse();
+      }
     }
-    else
-      if(result == PACKET_BAD)
-      {
+    else {
+      if(result == PACKET_BAD) {
         sendBadPacket();
       }
-      else
-        if(result == PACKET_CHECKSUM_BAD)
+      else {
+        if(result == PACKET_CHECKSUM_BAD) {
           sendBadChecksum();
+        }
+      }
+    }
   } // !exit
 }
 

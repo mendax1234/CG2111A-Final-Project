@@ -4,8 +4,7 @@
  * 
  */
 // Enable pull up resistors on pins 18 and 19
-void enablePullups()
-{
+void enablePullups() {
   // Use bare-metal to enable the pull-up resistors on pins
   // 19 and 18. These are pins PD2 and PD3 respectively.
   // We set bits 2 and 3 in DDRD to 0 to make them inputs.
@@ -15,8 +14,7 @@ void enablePullups()
 }
 
 // Functions to be called by INT2 and INT3 ISRs.
-void leftISR()
-{
+void leftISR() {
   if (dir == FORWARD) {
     leftForwardTicks++;
     forwardDist = (unsigned long) ((float) leftForwardTicks / COUNTS_PER_REV * WHEEL_CIRC);
@@ -36,8 +34,7 @@ void leftISR()
   }
 }
 
-void rightISR()
-{
+void rightISR() {
   if (dir == FORWARD) {
     rightForwardTicks++;
     // dbprintf("Right Forward Ticks: %ld", rightForwardTicks);
@@ -55,8 +52,7 @@ void rightISR()
 
 // Set up the external interrupt pins INT2 and INT3
 // for falling edge triggered. Use bare-metal.
-void setupEINT()
-{
+void setupEINT() {
   EICRA |= (1 << ISC31) | (1 << ISC21);  // Set INT3 and INT2 to falling edge
   EICRA &= ~((1 << ISC30) | (1 << ISC20)); 
   EIMSK |= (1 << INT3) | (1 << INT2); // Enable INT3 and INT2 interrupts
@@ -66,13 +62,11 @@ void setupEINT()
 // INT3 ISR should call leftISR while INT2 ISR
 // should call rightISR.
 
-ISR(INT2_vect)
-{
+ISR(INT2_vect) {
   rightISR();  // Call the rightISR function
 }
 
-ISR(INT3_vect)
-{
+ISR(INT3_vect) {
   leftISR();  // Call the leftISR function
 }
 

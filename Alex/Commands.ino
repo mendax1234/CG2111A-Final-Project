@@ -1,5 +1,4 @@
-void sendStatus()
-{
+void sendStatus() {
   // Create a new packet called statusPacket
   TPacket statusPacket;
 
@@ -26,8 +25,7 @@ void sendStatus()
 }
 
 
-void sendMessage(const char *message)
-{
+void sendMessage(const char *message) {
   // Sends text messages back to the Pi. Useful
   // for debugging.
   
@@ -45,8 +43,7 @@ void dbprintf(const char *format, ...) {
   sendMessage(buffer);
 } 
 
-void sendBadPacket()
-{
+void sendBadPacket() {
   // Tell the Pi that it sent us a packet with a bad
   // magic number.
   
@@ -57,8 +54,7 @@ void sendBadPacket()
   
 }
 
-void sendBadChecksum()
-{
+void sendBadChecksum() {
   // Tell the Pi that it sent us a packet with a bad
   // checksum.
   
@@ -68,8 +64,7 @@ void sendBadChecksum()
   sendResponse(&badChecksum);  
 }
 
-void sendBadCommand()
-{
+void sendBadCommand() {
   // Tell the Pi that we don't understand its
   // command sent to us.
   
@@ -79,16 +74,14 @@ void sendBadCommand()
   sendResponse(&badCommand);
 }
 
-void sendBadResponse()
-{
+void sendBadResponse() {
   TPacket badResponse;
   badResponse.packetType = PACKET_TYPE_ERROR;
   badResponse.command = RESP_BAD_RESPONSE;
   sendResponse(&badResponse);
 }
 
-void sendOK()
-{
+void sendOK() {
   TPacket okPacket;
   okPacket.packetType = PACKET_TYPE_RESPONSE;
   okPacket.command = RESP_OK;

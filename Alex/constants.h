@@ -23,8 +23,7 @@ const float ANG_MID = 100.0;
 const float ANG_FAR = 250.0;
 
 // Packet types
-typedef enum
-{
+typedef enum {
   PACKET_TYPE_COMMAND = 0,
   PACKET_TYPE_RESPONSE = 1,
   PACKET_TYPE_ERROR = 2,
@@ -33,8 +32,7 @@ typedef enum
 } TPacketType;
 
 // Response types. This goes into the command field
-typedef enum
-{
+typedef enum {
   RESP_OK = 0,
   RESP_STATUS=1,
   RESP_BAD_PACKET = 2,
@@ -48,8 +46,7 @@ typedef enum
 // Commands
 // For direction commands, param[0] = distance in cm to move
 // param[1] = speed
-typedef enum
-{
+typedef enum {
   COMMAND_FORWARD = 0,
   COMMAND_REVERSE = 1,
   COMMAND_TURN_LEFT = 2,
@@ -67,8 +64,7 @@ typedef enum
   COMMAND_PRINT_INST = 14,
 } TCommandType;
 
-typedef enum
-{
+typedef enum {
   STOP=0,
   FORWARD=1,
   BACKWARD=2,

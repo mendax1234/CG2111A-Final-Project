@@ -169,24 +169,24 @@ void handleCommand(TPacket *command)
       break;
 
     case COMMAND_SLOW_MODE:
-      speed = SPEED_FAST;
-      distance = DIST_SHORT;
-      angleDur = ANG_SHORT;
-      sendOK();
+        speed = SPEED_FAST;
+        distance = DIST_SHORT;
+        angleDur = ANG_SHORT;
+        sendOK();
       break;
     
     case COMMAND_NORMAL_MODE:
-      speed = SPEED_FAST;
-      distance = DIST_MID;
-      angleDur = ANG_MID;
-      sendOK();
+        speed = SPEED_FAST;
+        distance = DIST_MID;
+        angleDur = ANG_MID;
+        sendOK();
       break;
 
     case COMMAND_FAST_MODE:
-      speed = SPEED_FAST;
-      distance = DIST_FAR;
-      angleDur = ANG_FAR;
-      sendOK();
+        speed = SPEED_FAST;
+        distance = DIST_FAR;
+        angleDur = ANG_FAR;
+        sendOK();
       break;
 
     // Get stats (send back status)
@@ -202,33 +202,33 @@ void handleCommand(TPacket *command)
       break;
 
     case COMMAND_MANUAL:
-      MANUAL = !MANUAL; // Toggle manual mode
-      if (!MANUAL) { // Reset distance and angle when toggle back to auto mode
-        distance = DIST_MID;
-        angleDur = ANG_MID;
-      }
-      sendOK();
+        MANUAL = !MANUAL; // Toggle manual mode
+        if (!MANUAL) { // Reset distance and angle when toggle back to auto mode
+          distance = DIST_MID;
+          angleDur = ANG_MID;
+        }
+        sendOK();
       break;
 
     case COMMAND_COLOR:
-      findColor();
-      getColor();
-      sendColor(detectedColor);
-      sendOK();
+        findColor();
+        getColor();
+        sendColor(detectedColor);
+        sendOK();
       break;
 
     case COMMAND_OPEN_ARM:
-      openArm();
-      sendOK();
+        openArm();
+        sendOK();
       break;
 
     case COMMAND_CLOSE_ARM:
-      closeArm();
-      sendOK();
+        closeArm();
+        sendOK();
       break;
 
     case COMMAND_PRINT_INST:
-      sendOK();
+        sendOK();
       break;
         
     default:
@@ -296,6 +296,7 @@ void loop() {
       stop();
     }
   }
+
   /* 
   // Distance control
     if (deltaDist > 0) {
