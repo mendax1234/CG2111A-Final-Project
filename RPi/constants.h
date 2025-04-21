@@ -1,10 +1,10 @@
 #ifndef __CONSTANTS_INC__
 #define __CONSTANTS_INC__
 
-/* 
+/*
  *  This file containts all the packet types, commands
  *  and status constants
- *  
+ *
  */
 
 const char FORWARD = 'w';
@@ -25,8 +25,7 @@ const char NORMAL_MODE = '2';
 const char FAST_MODE = '3';
 
 // Packet types
-typedef enum
-{
+typedef enum {
   PACKET_TYPE_COMMAND = 0,
   PACKET_TYPE_RESPONSE = 1,
   PACKET_TYPE_ERROR = 2,
@@ -35,10 +34,9 @@ typedef enum
 } TPacketType;
 
 // Response types. This goes into the command field
-typedef enum
-{
+typedef enum {
   RESP_OK = 0,
-  RESP_STATUS=1,
+  RESP_STATUS = 1,
   RESP_BAD_PACKET = 2,
   RESP_BAD_CHECKSUM = 3,
   RESP_BAD_COMMAND = 4,
@@ -46,12 +44,10 @@ typedef enum
   RESP_COLOR = 6,
 } TResponseType;
 
-
 // Commands
 // For direction commands, param[0] = distance in cm to move
 // param[1] = speed
-typedef enum
-{
+typedef enum {
   COMMAND_FORWARD = 0,
   COMMAND_REVERSE = 1,
   COMMAND_TURN_LEFT = 2,
@@ -69,4 +65,3 @@ typedef enum
   COMMAND_PRINT_INST = 14,
 } TCommandType;
 #endif
-
