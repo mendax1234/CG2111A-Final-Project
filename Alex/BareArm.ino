@@ -8,18 +8,18 @@ void setupArm() {
   TCCR5B = 0b00011010;
 
   ICR5 = 40000;
-  OCR5A = 3000;
+  OCR5A = 2000;
   OCR5B = 3000;
 }
 
 void openArm() {
-  OCR5A = 3000;
+  OCR5A = 2000;
   OCR5B = 3000;
 }
 
 void closeArm() {
-  OCR5A = 2000;
-  OCR5B = 4000;
+  OCR5A = 2500;
+  OCR5B = 2500;
 }
 
 // Process color readings and control servos
