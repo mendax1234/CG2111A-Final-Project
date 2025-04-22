@@ -15,4 +15,9 @@ Run the generated executable file to start sending commands to the Arduino to op
 ```
 
 ## Format
-To make our code clean and easy to read, also to keep the good coding habit from CS1010, we use `clang-format` to format our code.
+To make our code clean and easy to read, also to keep the good coding habit from CS1010, we use `clang-format` to format our code. To format you code, you can execute the following steps on RPi, or any Ubuntu/Debian system.
+
+```bash
+sudo apt install clang-format # install clang-format
+clang-format -i filname # format the code using clang
+```
