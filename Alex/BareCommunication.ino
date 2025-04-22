@@ -1,6 +1,6 @@
 /*
  * Setup and start codes for serial communications
- * If using bare metal, remove stdio.h and printf in serialize.cpp for compatability
+ * If using bare metal, remove stdio.h and printf in serialize.cpp for compatibility
  * Ensure header for serialize.h is: #ifndef __SERIALIZE__ #define __SERIALIZE__
  * If already uploaded to Arduino library, change directly in Arduino libraries folder
  */
