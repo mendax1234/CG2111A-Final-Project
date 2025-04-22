@@ -38,23 +38,15 @@ void findColor() {
 
 void getColor() {
   // Determine color based on RGB frequencies
-  // Case 1: White
-  if (redFreq <= 15 && greenFreq <= 15 && blueFreq <= 15) {
-    detectedColor = WHITE;
-  }
-  // Case 2: Red
-  else if (redFreq < blueFreq && redFreq <= greenFreq && redFreq < 23) {
+  // Case 1: Red
+  if (redFreq < blueFreq && redFreq <= greenFreq && redFreq < 23) {
     detectedColor = RED;
   }
-  // Case 3: Blue
-  else if (blueFreq < greenFreq && blueFreq < redFreq && blueFreq < 20) {
-    detectedColor = BLUE;
-  }
-  // Case 4: Green
+  // Case 2: Green
   else if (greenFreq < redFreq && (greenFreq - blueFreq) <= 8) {
     detectedColor = GREEN;
   }
-  // Case 5: Unknown color - Default case if no other condition is met
+  // Case 3: Unknown color - Default case if no other condition is met
   else {
     detectedColor = UNKNOWN;
   }
