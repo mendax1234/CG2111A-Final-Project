@@ -9,7 +9,7 @@ Pictures of our Alex:
 | Side View           | Bottom View           |
 
 ## Implementation
-The full explanation of our robot implementation can be viewed in our group report 
+The full explanation of our robot implementation can be viewed in our group report [here]()
 
 ## Alex Control Program
 Once the hardware connections have been verified, upload the Arduino program called `Alex.ino` in `Alex` folder to the Arduino Uno. Other files`.ino` are tabs to the main file and should be compiled together. Ensure that they are recognised as tabs for the program to compile correctly.
