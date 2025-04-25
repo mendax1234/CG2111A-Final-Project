@@ -1,4 +1,16 @@
-# CG2111A Final Project
+# Alex to the Rescue Project
+Our task is to build a robot capable of navigating an unknown environment using LIDAR data. Along the way, the robot will encounter astronauts of different colours, each requiring a specific type of attention to be successfully "rescued." The robot must interpret these visual cues, plan its path accordingly, and maneuver through the space efficiently to complete the mission.
+
+Pictures of our Alex:
+| ![](images/Back.jpg) | ![](images/Front.jpg) |
+|:--------------------:|:---------------------:|
+| Back View           | Front View            |
+| ![](images/Side.jpg) | ![](images/Bottom.jpg) |
+| Side View           | Bottom View           |
+
+## Implementation
+The full explanation of our robot implementation can be viewed in our group report 
+
 ## Alex Control Program
 Once the hardware connections have been verified, upload the Arduino program called `Alex.ino` in `Alex` folder to the Arduino Uno. Other files`.ino` are tabs to the main file and should be compiled together. Ensure that they are recognised as tabs for the program to compile correctly.
 
