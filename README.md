@@ -9,10 +9,10 @@ Pictures of our Alex:
 | Side View           | Bottom View           |
 
 ## Implementation
-The full explanation of our robot implementation can be viewed in our group report [here]()
+The full explanation of our robot implementation can be viewed in our group report [here](/report.pdf)
 
 ## Alex Control Program
-Once the hardware connections have been verified, upload the Arduino program called `Alex.ino` in `Alex` folder to the Arduino Uno. Other files`.ino` are tabs to the main file and should be compiled together. Ensure that they are recognised as tabs for the program to compile correctly.
+Once the hardware connections have been verified, upload the Arduino program called `Alex.ino` in `Alex` folder to the Arduino Uno. Other files `.ino` are tabs to the main file and should be compiled together. Ensure that they are recognised as tabs for the program to compile correctly.
 
 ### Compile
 Next, compile the `alex-pi.cpp` program to control Alex:
